@@ -1,7 +1,7 @@
-import { TalkerId } from './model/talker-id.enum';
-import { MessageId } from './model/message-id.enum';
-import { Message } from './model/message';
-import { MessageSummary } from './model/message-summary';
+import { TalkerId } from '../model/talker-id.enum';
+import { MessageId } from '../model/message-id.enum';
+import { Message } from '../model/message';
+import { MessageSummary } from '../model/message-summary';
 import { Nmea, mapToEnum } from '@kyosho-/nmea';
 
 /**
