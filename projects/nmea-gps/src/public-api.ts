@@ -3,4 +3,4 @@
  */
 
 export * from './lib/model';
-export * from './lib/nmea-gps-factory';
+export * from './lib/nmea-gps-manager';

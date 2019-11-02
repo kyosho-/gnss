@@ -22,7 +22,7 @@ import { NmeaGpsVlw } from './gps/nmea-gps-vlw';
 import { NmeaGpsVtg } from './gps/nmea-gps-vtg';
 import { NmeaGpsZda } from './gps/nmea-gps-zda';
 
-export class NmeaFactory {
+export class NmeaGpsFactory {
 
     constructor() {
         throw new Error(`Constructor is not supported.`);
