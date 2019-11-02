@@ -5,15 +5,15 @@
     "ng": "ng",
     "start": "ng serve",
     "build:nmea": "ng build --project=nmea",
-    "build:std": "ng build --project=nmea-std",
+    "build:gps": "ng build --project=nmea-gps",
     "test:nmea": "ng test --project=nmea --code-coverage --watch=false",
-    "test:std": "ng test --project=nmea-std --code-coverage --watch=false",
+    "test:gps": "ng test --project=nmea-gps --code-coverage --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "loc:nmea": "npx sloc projects/nmea/src/lib -f cli-table -e .*(\\.spec\\.ts)",
-    "loc:std": "npx sloc projects/nmea-std/src/lib -f cli-table -e .*(\\.spec\\.ts)",
+    "loc:gps": "npx sloc projects/nmea-gps/src/lib -f cli-table -e .*(\\.spec\\.ts)",
     "doc:nmea": "npx typedoc --out documentation/nmea --exclude \\\"**/*+(index|.spec|.e2e|test|public-api).ts\\\" --hideGenerator projects/nmea",
-    "doc:std": "npx typedoc --out documentation/nmea-std --exclude \\\"**/*+(index|.spec|.e2e|test|public-api).ts\\\" --hideGenerator projects/nmea-std"
+    "doc:gps": "npx typedoc --out documentation/nmea-gps --exclude \\\"**/*+(index|.spec|.e2e|test|public-api).ts\\\" --hideGenerator projects/nmea-gps"
   },
   "private": true,
   "dependencies": {

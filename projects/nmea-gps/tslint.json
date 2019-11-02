@@ -1,0 +1,17 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "nmeaGps",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "nmea-gps",
+      "kebab-case"
+    ]
+  }
+}

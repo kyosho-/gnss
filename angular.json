@@ -38,33 +38,33 @@
         }
       }
     },
-    "nmea-std": {
+    "nmea-gps": {
       "projectType": "library",
-      "root": "projects/nmea-std",
-      "sourceRoot": "projects/nmea-std/src",
-      "prefix": "nmea-std",
+      "root": "projects/nmea-gps",
+      "sourceRoot": "projects/nmea-gps/src",
+      "prefix": "nmea-gps",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/nmea-std/tsconfig.lib.json",
-            "project": "projects/nmea-std/ng-package.json"
+            "tsConfig": "projects/nmea-gps/tsconfig.lib.json",
+            "project": "projects/nmea-gps/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/nmea-std/src/test.ts",
-            "tsConfig": "projects/nmea-std/tsconfig.spec.json",
-            "karmaConfig": "projects/nmea-std/karma.conf.js"
+            "main": "projects/nmea-gps/src/test.ts",
+            "tsConfig": "projects/nmea-gps/tsconfig.spec.json",
+            "karmaConfig": "projects/nmea-gps/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/nmea-std/tsconfig.lib.json",
-              "projects/nmea-std/tsconfig.spec.json"
+              "projects/nmea-gps/tsconfig.lib.json",
+              "projects/nmea-gps/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -177,6 +177,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "nmea"
 }
