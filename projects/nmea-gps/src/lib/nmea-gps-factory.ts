@@ -2,25 +2,25 @@ import { Nmea } from '@kyosho-/nmea';
 
 import { Message, MessageId } from './model';
 
-import { NmeaGps } from './gps/nmea-gps';
-import { NmeaGpsDtm } from './gps/nmea-gps-dtm';
-import { NmeaGpsGbq } from './gps/nmea-gps-gbq';
-import { NmeaGpsGbs } from './gps/nmea-gps-gbs';
-import { NmeaGpsGga } from './gps/nmea-gps-gga';
-import { NmeaGpsGll } from './gps/nmea-gps-gll';
-import { NmeaGpsGlq } from './gps/nmea-gps-glq';
-import { NmeaGpsGnq } from './gps/nmea-gps-gnq';
-import { NmeaGpsGns } from './gps/nmea-gps-gns';
-import { NmeaGpsGpq } from './gps/nmea-gps-gpq';
-import { NmeaGpsGrs } from './gps/nmea-gps-grs';
-import { NmeaGpsGsa } from './gps/nmea-gps-gsa';
-import { NmeaGpsGst } from './gps/nmea-gps-gst';
-import { NmeaGpsGsv } from './gps/nmea-gps-gsv';
-import { NmeaGpsRmc } from './gps/nmea-gps-rmc';
-import { NmeaGpsTxt } from './gps/nmea-gps-txt';
-import { NmeaGpsVlw } from './gps/nmea-gps-vlw';
-import { NmeaGpsVtg } from './gps/nmea-gps-vtg';
-import { NmeaGpsZda } from './gps/nmea-gps-zda';
+import { NmeaGps } from './parser/nmea-gps';
+import { NmeaGpsDtm } from './parser/nmea-gps-dtm';
+import { NmeaGpsGbq } from './parser/nmea-gps-gbq';
+import { NmeaGpsGbs } from './parser/nmea-gps-gbs';
+import { NmeaGpsGga } from './parser/nmea-gps-gga';
+import { NmeaGpsGll } from './parser/nmea-gps-gll';
+import { NmeaGpsGlq } from './parser/nmea-gps-glq';
+import { NmeaGpsGnq } from './parser/nmea-gps-gnq';
+import { NmeaGpsGns } from './parser/nmea-gps-gns';
+import { NmeaGpsGpq } from './parser/nmea-gps-gpq';
+import { NmeaGpsGrs } from './parser/nmea-gps-grs';
+import { NmeaGpsGsa } from './parser/nmea-gps-gsa';
+import { NmeaGpsGst } from './parser/nmea-gps-gst';
+import { NmeaGpsGsv } from './parser/nmea-gps-gsv';
+import { NmeaGpsRmc } from './parser/nmea-gps-rmc';
+import { NmeaGpsTxt } from './parser/nmea-gps-txt';
+import { NmeaGpsVlw } from './parser/nmea-gps-vlw';
+import { NmeaGpsVtg } from './parser/nmea-gps-vtg';
+import { NmeaGpsZda } from './parser/nmea-gps-zda';
 
 export class NmeaGpsFactory {
 
