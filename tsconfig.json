@@ -1,0 +1,118 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "nmea": [
+        "dist/nmea",
+        "dist/nmea"
+      ],
+      "nmea/*": [
+        "dist/nmea/*",
+        "dist/nmea/*"
+      ],
+      "ais": [
+        "dist/ais"
+      ],
+      "ais/*": [
+        "dist/ais/*"
+      ],
+      "gnss": [
+        "dist/gnss"
+      ],
+      "gnss/*": [
+        "dist/gnss/*"
+      ],
+      "nmea-ubx": [
+        "dist/nmea-ubx",
+        "dist/nmea-ubx"
+      ],
+      "nmea-ubx/*": [
+        "dist/nmea-ubx/*",
+        "dist/nmea-ubx/*"
+      ],
+      "@gnss/nmea": [
+        "dist/gnss/nmea",
+        "dist/gnss/nmea"
+      ],
+      "@gnss/nmea/*": [
+        "dist/gnss/nmea/*",
+        "dist/gnss/nmea/*"
+      ],
+      "nmea-std": [
+        "dist/nmea-std",
+        "dist/nmea-std"
+      ],
+      "nmea-std/*": [
+        "dist/nmea-std/*",
+        "dist/nmea-std/*"
+      ],
+      "nmea-ais": [
+        "dist/nmea-ais",
+        "dist/nmea-ais"
+      ],
+      "nmea-ais/*": [
+        "dist/nmea-ais/*",
+        "dist/nmea-ais/*"
+      ],
+      "rtcm": [
+        "dist/rtcm",
+        "dist/rtcm"
+      ],
+      "rtcm/*": [
+        "dist/rtcm/*",
+        "dist/rtcm/*"
+      ],
+      "@gnss/ais": [
+        "dist/gnss/ais"
+      ],
+      "@gnss/ais/*": [
+        "dist/gnss/ais/*"
+      ],
+      "@gnss/nmea-ais": [
+        "dist/gnss/nmea-ais"
+      ],
+      "@gnss/nmea-ais/*": [
+        "dist/gnss/nmea-ais/*"
+      ],
+      "@gnss/nmea-std": [
+        "dist/gnss/nmea-std"
+      ],
+      "@gnss/nmea-std/*": [
+        "dist/gnss/nmea-std/*"
+      ],
+      "@gnss/nmea-ubx": [
+        "dist/gnss/nmea-ubx"
+      ],
+      "@gnss/nmea-ubx/*": [
+        "dist/gnss/nmea-ubx/*"
+      ],
+      "@gnss/rtcm": [
+        "dist/gnss/rtcm"
+      ],
+      "@gnss/rtcm/*": [
+        "dist/gnss/rtcm/*"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

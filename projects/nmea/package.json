@@ -1,0 +1,26 @@
+{
+  "name": "@kyosho-/nmea",
+  "version": "0.0.3",
+  "description": "NMEA Parser",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyosho-/gnss.git"
+  },
+  "keywords": [
+    "cordova",
+    "gps",
+    "nmea",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Akira Kurosawa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kyosho-/gnss/issues"
+  },
+  "homepage": "https://github.com/kyosho-/gnss#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {}
+}
