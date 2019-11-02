@@ -1,27 +1,26 @@
 import { Nmea } from '@kyosho-/nmea';
 
-import { MessageId } from '../model/message-id.enum';
-import { Message } from '../model/message';
+import { Message, MessageId } from './model';
 
-import { NmeaStd } from './nmea-std';
-import { NmeaStdDtm } from './nmea-std-dtm';
-import { NmeaStdGbq } from './nmea-std-gbq';
-import { NmeaStdGbs } from './nmea-std-gbs';
-import { NmeaStdGga } from './nmea-std-gga';
-import { NmeaStdGll } from './nmea-std-gll';
-import { NmeaStdGlq } from './nmea-std-glq';
-import { NmeaStdGnq } from './nmea-std-gnq';
-import { NmeaStdGns } from './nmea-std-gns';
-import { NmeaStdGpq } from './nmea-std-gpq';
-import { NmeaStdGrs } from './nmea-std-grs';
-import { NmeaStdGsa } from './nmea-std-gsa';
-import { NmeaStdGst } from './nmea-std-gst';
-import { NmeaStdGsv } from './nmea-std-gsv';
-import { NmeaStdRmc } from './nmea-std-rmc';
-import { NmeaStdTxt } from './nmea-std-txt';
-import { NmeaStdVlw } from './nmea-std-vlw';
-import { NmeaStdVtg } from './nmea-std-vtg';
-import { NmeaStdZda } from './nmea-std-zda';
+import { NmeaStd } from './std/nmea-std';
+import { NmeaStdDtm } from './std/nmea-std-dtm';
+import { NmeaStdGbq } from './std/nmea-std-gbq';
+import { NmeaStdGbs } from './std/nmea-std-gbs';
+import { NmeaStdGga } from './std/nmea-std-gga';
+import { NmeaStdGll } from './std/nmea-std-gll';
+import { NmeaStdGlq } from './std/nmea-std-glq';
+import { NmeaStdGnq } from './std/nmea-std-gnq';
+import { NmeaStdGns } from './std/nmea-std-gns';
+import { NmeaStdGpq } from './std/nmea-std-gpq';
+import { NmeaStdGrs } from './std/nmea-std-grs';
+import { NmeaStdGsa } from './std/nmea-std-gsa';
+import { NmeaStdGst } from './std/nmea-std-gst';
+import { NmeaStdGsv } from './std/nmea-std-gsv';
+import { NmeaStdRmc } from './std/nmea-std-rmc';
+import { NmeaStdTxt } from './std/nmea-std-txt';
+import { NmeaStdVlw } from './std/nmea-std-vlw';
+import { NmeaStdVtg } from './std/nmea-std-vtg';
+import { NmeaStdZda } from './std/nmea-std-zda';
 
 export class NmeaFactory {
 

@@ -3,4 +3,4 @@
  */
 
 export * from './lib/model';
-export * from './lib/std/nmea-std-factory';
+export * from './lib/nmea-std-factory';

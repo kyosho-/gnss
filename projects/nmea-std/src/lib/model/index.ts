@@ -2,6 +2,7 @@ export * from './datum.enum';
 export * from './talker-id.enum';
 export * from './message-id.enum';
 
+export * from './message';
 export * from './message-dtm';
 export * from './message-gbq';
 export * from './message-gbs';
