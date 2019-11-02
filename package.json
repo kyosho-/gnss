@@ -4,10 +4,16 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
+    "build:nmea": "ng build --project=nmea",
+    "build:std": "ng build --project=nmea-std",
+    "test:nmea": "ng test --project=nmea --code-coverage --watch=false",
+    "test:std": "ng test --project=nmea-std --code-coverage --watch=false",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "loc:nmea": "npx sloc projects/nmea/src/lib -f cli-table -e .*(\\.spec\\.ts)",
+    "loc:std": "npx sloc projects/nmea-std/src/lib -f cli-table -e .*(\\.spec\\.ts)",
+    "doc:nmea": "npx typedoc --out documentation/nmea --exclude \\\"**/*+(index|.spec|.e2e|test|public-api).ts\\\" --hideGenerator projects/nmea",
+    "doc:std": "npx typedoc --out documentation/nmea-std --exclude \\\"**/*+(index|.spec|.e2e|test|public-api).ts\\\" --hideGenerator projects/nmea-std"
   },
   "private": true,
   "dependencies": {
@@ -30,9 +36,10 @@
     "@angular/cli": "~8.3.14",
     "@angular/compiler-cli": "~8.2.11",
     "@angular/language-service": "~8.2.11",
-    "@types/node": "~8.9.4",
+    "@compodoc/compodoc": "^1.1.11",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -43,9 +50,11 @@
     "karma-jasmine-html-reporter": "^1.4.0",
     "ng-packagr": "^5.4.0",
     "protractor": "~5.4.0",
+    "sloc": "^0.2.1",
     "ts-node": "~7.0.0",
     "tsickle": "^0.37.0",
     "tslint": "~5.15.0",
+    "typedoc": "^0.15.0",
     "typescript": "~3.5.3"
   }
 }
