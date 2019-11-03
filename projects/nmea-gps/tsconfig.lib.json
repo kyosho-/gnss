@@ -11,13 +11,24 @@
       "es2018"
     ]
   },
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "enableResourceInlining": true
+  "typedocOptions": {
+    "mode": "file",
+    "out": "documentation/nmea-gps",
+    "categorizeByGroup": true,
+    "hideGenerator": true,
+    "exclude": [
+      "**/*/index.ts",
+      "**/*/*.spec.ts",
+      "**/*/test.ts",
+      "**/*/public-api.ts",
+      "**/src/lib/nmea-gps-factory.ts",
+      "**/src/lib/parser/**/*.ts"
+    ],
+    "media": [
+      "projects/nmea-gps/docs/images"
+    ],
+    "excludePrivate": true,
+    "excludeProtected": true
   },
   "exclude": [
     "src/test.ts",

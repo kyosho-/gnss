@@ -9,8 +9,9 @@
     "lint": "npx ng lint",
     "loc:nmea": "npx sloc projects/nmea/src/lib -f cli-table -e .*(\\.spec\\.ts)",
     "loc:gps": "npx sloc projects/nmea-gps/src/lib -f cli-table -e .*(\\.spec\\.ts)",
-    "doc:nmea": "npx typedoc --out documentation/nmea --exclude \\\"**/*+(index|.spec|.e2e|test|public-api).ts\\\" --hideGenerator projects/nmea",
-    "doc:gps": "npx typedoc --out documentation/nmea-gps --exclude \\\"**/*+(index|.spec|.e2e|test|public-api).ts\\\" --hideGenerator projects/nmea-gps"
+    "uml:msg": "npx puml generate projects/nmea-gps/docs/class-message.pu -o projects/nmea-gps/docs/images/class-message.png",
+    "doc:nmea": "npx typedoc --tsconfig projects/nmea/tsconfig.lib.json projects/nmea",
+    "doc:gps": "npx typedoc --tsconfig projects/nmea-gps/tsconfig.lib.json projects/nmea-gps"
   },
   "private": true,
   "dependencies": {
@@ -22,7 +23,6 @@
     "@angular/platform-browser": "~8.2.11",
     "@angular/platform-browser-dynamic": "~8.2.11",
     "@angular/router": "~8.2.11",
-    "@kyosho-/nmea": "0.0.3",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
@@ -49,6 +49,7 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "ng-packagr": "^5.4.0",
+    "node-plantuml": "^0.9.0",
     "protractor": "~5.4.0",
     "sloc": "^0.2.1",
     "ts-node": "~7.0.0",

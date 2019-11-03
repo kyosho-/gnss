@@ -1,0 +1,53 @@
+@startuml class-message
+class Message {
+    +talkerId: TalkerId
+    +messageId: MessageId
+}
+@enduml
+
+@startuml class-message-dtm
+Message <|-- MessageDtm
+
+class Message {
+    +talkerId: TalkerId
+    +messageId: MessageId
+}
+
+class MessageDtm {
+    +datum: Datum
+    +subDatum?: any
+    +lat: number
+    +NS: string
+    +lon: number
+    +EW: string
+    +alt: number
+    +refDatum: Datum
+}
+' Message <|- MessageGbq
+' Message <|- MessageGbs
+' Message <|- MessageGga
+' Message <|- MessageGll
+' Message <|- MessageGlq
+' Message <|- MessageGnq
+' Message <|- MessageGns
+' Message <|- MessageGpq
+
+' MessageGrs -|> Message
+' MessageGsa -|> Message
+' MessageGst -|> Message
+' MessageGsv -|> Message
+' MessageRmc -|> Message
+' MessageTxt -|> Message
+' MessageVlw -|> Message
+' MessageVtg -|> Message
+' MessageZda -|> Message
+
+' MessageDtm -- MessageGbq
+' MessageGbq -- MessageGbs
+' MessageGbs -- MessageGga
+' MessageGga -- MessageGll
+' MessageGll -- MessageGlq
+' MessageGlq -- MessageGnq
+' MessageGnq -- MessageGns
+' MessageGns -- MessageGpq
+@enduml

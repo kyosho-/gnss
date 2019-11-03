@@ -22,6 +22,9 @@ import {
 } from './model';
 import { NmeaGpsFactory } from './nmea-gps-factory';
 
+/**
+ * @category controller
+ */
 export class NmeaGpsManager {
 
     private messageDtm: MessageDtm;

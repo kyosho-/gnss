@@ -11,13 +11,18 @@
       "es2018"
     ]
   },
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "enableResourceInlining": true
+  "typedocOptions": {
+    "mode": "file",
+    "out": "documentation/nmea",
+    "hideGenerator": true,
+    "exclude": [
+      "**/*/index.ts",
+      "**/*/*.spec.ts",
+      "**/*/test.ts",
+      "**/*/public-api.ts"
+    ],
+    "excludePrivate": true,
+    "excludeProtected": true
   },
   "exclude": [
     "src/test.ts",
