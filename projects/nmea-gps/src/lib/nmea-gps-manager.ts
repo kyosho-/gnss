@@ -1,5 +1,6 @@
 import {
     MessageId,
+    Message,
     MessageDtm,
     MessageGbq,
     MessageGbs,
@@ -61,7 +62,11 @@ export class NmeaGpsManager {
     get vtg() { return this.messageVtg; }
     get zda() { return this.messageZda; }
 
-    update(line: string): void {
+    update(line: string): Message {
+        if (undefined === line || null === line) {
+            return undefined;
+        }
+
         const message = NmeaGpsFactory.create(line);
 
         switch (message.messageId) {
@@ -122,5 +127,7 @@ export class NmeaGpsManager {
             default:
                 throw new Error(`Unsupported message ID. (id=${message.messageId})`);
         }
+
+        return message;
     }
 }
