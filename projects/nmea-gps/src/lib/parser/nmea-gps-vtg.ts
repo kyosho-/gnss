@@ -5,20 +5,6 @@ import { Message } from '../model/message';
 import { MessageVtg } from '../model/message-vtg';
 
 export class NmeaGpsVtg extends NmeaGps {
-
-    /**
-     * Field parameter number.
-     */
-    public static readonly FIELD_NUM = 9;
-
-    /**
-     * validate data
-     * @param mid message ID.
-     */
-    validateMessageId(mid: MessageId): boolean {
-        return mid === MessageId.VTG;
-    }
-
     /**
      * parse data
      * @param tid talker ID
@@ -26,14 +12,12 @@ export class NmeaGpsVtg extends NmeaGps {
      * @param message message
      */
     parse(tid: TalkerId, mid: MessageId, message: string): Message {
+        // カンマ区切りを分割するだけならば、パーサを一つにまとめられると思う。
+        // TODO: 1つにまとめる方向で検討する。
         const splitted = message.split(NmeaGps.FIELD_DELIMITER);
-        if (splitted.length !== NmeaGpsVtg.FIELD_NUM) {
+        if (splitted.length !== MessageVtg.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${message})`);
         }
-        return {
-            talkerId: tid,
-            messageId: mid,
-            cogt: Number.parseFloat(splitted[0]),
-        } as MessageVtg;
+        return new MessageVtg(tid, mid, splitted);
     }
 }

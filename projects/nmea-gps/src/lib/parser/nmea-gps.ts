@@ -45,7 +45,7 @@ export abstract class NmeaGps extends Nmea {
             isStandard: tid !== undefined && mid !== undefined,
             talkerId: tid,
             messageId: mid
-        };
+        } as MessageSummary;
     }
 
     /**
@@ -69,8 +69,6 @@ export abstract class NmeaGps extends Nmea {
         this.message = this.parse(this.talkerId, this.messageId, this.value);
     }
 
-    abstract validateMessageId(mid: MessageId): boolean;
-
     /**
      * parse data
      * @param tid talker ID
@@ -78,6 +76,8 @@ export abstract class NmeaGps extends Nmea {
      * @param value value
      */
     abstract parse(tid: TalkerId, mid: MessageId, value: string): Message;
+    // カンマ区切りを分割するだけならば、パーサを一つにまとめられると思う。
+    // TODO: 1つにまとめる方向で検討する。
 
     validate(input: Nmea, result: MessageSummary) {
         if (!result.isStandard) {
@@ -85,11 +85,11 @@ export abstract class NmeaGps extends Nmea {
         }
 
         if (!result.talkerId) {
-            throw new Error(`Data is not match talker ID.(messageId=${result.talkerId})`);
+            throw new Error(`Talker ID is undefined.(talkerId=${result.talkerId})`);
         }
 
-        if (!this.validateMessageId(result.messageId)) {
-            throw new Error(`Data is not match message ID.(messageId=${result.messageId})`);
+        if (!result.messageId) {
+            throw new Error(`Message ID is undefined.(messageId=${result.messageId})`);
         }
     }
 

@@ -1,26 +1,28 @@
 import { Nmea } from '@kyosho-/nmea';
 
-import { Message, MessageId } from './model';
-
 import { NmeaGps } from './parser/nmea-gps';
-import { NmeaGpsDtm } from './parser/nmea-gps-dtm';
-import { NmeaGpsGbq } from './parser/nmea-gps-gbq';
-import { NmeaGpsGbs } from './parser/nmea-gps-gbs';
-import { NmeaGpsGga } from './parser/nmea-gps-gga';
-import { NmeaGpsGll } from './parser/nmea-gps-gll';
-import { NmeaGpsGlq } from './parser/nmea-gps-glq';
-import { NmeaGpsGnq } from './parser/nmea-gps-gnq';
-import { NmeaGpsGns } from './parser/nmea-gps-gns';
-import { NmeaGpsGpq } from './parser/nmea-gps-gpq';
-import { NmeaGpsGrs } from './parser/nmea-gps-grs';
-import { NmeaGpsGsa } from './parser/nmea-gps-gsa';
-import { NmeaGpsGst } from './parser/nmea-gps-gst';
-import { NmeaGpsGsv } from './parser/nmea-gps-gsv';
-import { NmeaGpsRmc } from './parser/nmea-gps-rmc';
-import { NmeaGpsTxt } from './parser/nmea-gps-txt';
-import { NmeaGpsVlw } from './parser/nmea-gps-vlw';
-import { NmeaGpsVtg } from './parser/nmea-gps-vtg';
-import { NmeaGpsZda } from './parser/nmea-gps-zda';
+import {
+    Message,
+    MessageId,
+    MessageDtm,
+    MessageGbq,
+    MessageGbs,
+    MessageGga,
+    MessageGll,
+    MessageGlq,
+    MessageGnq,
+    MessageGns,
+    MessageGpq,
+    MessageGrs,
+    MessageGsa,
+    MessageGst,
+    MessageGsv,
+    MessageRmc,
+    MessageTxt,
+    MessageVlw,
+    MessageVtg,
+    MessageZda
+} from './model';
 
 export class NmeaGpsFactory {
 
@@ -30,73 +32,128 @@ export class NmeaGpsFactory {
 
     static create(line: string): Message {
         const nmea: Nmea = Nmea.parse(line);
-        const validationResult = NmeaGps.isStandard(nmea);
 
-        if (!validationResult.isStandard) {
+        const validated = NmeaGps.isStandard(nmea);
+        if (!validated.isStandard) {
             throw new Error(`This data is not  NMEA format. (line=${line})`);
         }
 
-        let nmeaGps: NmeaGps;
-        switch (validationResult.messageId) {
+        const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
+        let message: Message;
+        switch (validated.messageId) {
             case MessageId.DTM:
-                nmeaGps = new NmeaGpsDtm(nmea);
+                message = new MessageDtm(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GBQ:
-                nmeaGps = new NmeaGpsGbq(nmea);
+                message = new MessageGbq(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GBS:
-                nmeaGps = new NmeaGpsGbs(nmea);
+                message = new MessageGbs(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GGA:
-                nmeaGps = new NmeaGpsGga(nmea);
+                message = new MessageGga(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GLL:
-                nmeaGps = new NmeaGpsGll(nmea);
+                message = new MessageGll(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GLQ:
-                nmeaGps = new NmeaGpsGlq(nmea);
+                message = new MessageGlq(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GNQ:
-                nmeaGps = new NmeaGpsGnq(nmea);
+                message = new MessageGnq(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GNS:
-                nmeaGps = new NmeaGpsGns(nmea);
+                message = new MessageGns(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GPQ:
-                nmeaGps = new NmeaGpsGpq(nmea);
+                message = new MessageGpq(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GRS:
-                nmeaGps = new NmeaGpsGrs(nmea);
+                message = new MessageGrs(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GSA:
-                nmeaGps = new NmeaGpsGsa(nmea);
+                message = new MessageGsa(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GST:
-                nmeaGps = new NmeaGpsGst(nmea);
+                message = new MessageGst(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.GSV:
-                nmeaGps = new NmeaGpsGsv(nmea);
+                message = new MessageGsv(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.RMC:
-                nmeaGps = new NmeaGpsRmc(nmea);
+                message = new MessageRmc(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.TXT:
-                nmeaGps = new NmeaGpsTxt(nmea);
+                message = new MessageTxt(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.VLW:
-                nmeaGps = new NmeaGpsVlw(nmea);
+                message = new MessageVlw(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.VTG:
-                nmeaGps = new NmeaGpsVtg(nmea);
+                message = new MessageVtg(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             case MessageId.ZDA:
-                nmeaGps = new NmeaGpsZda(nmea);
+                message = new MessageZda(
+                    validated.talkerId,
+                    validated.messageId,
+                    splitted);
                 break;
             default:
-                // TIPS: Unit Testでは到達できない
-                throw new Error(`Unsupported message ID. (id=${validationResult.messageId})`);
+                throw new Error(
+                    `Unsupported message ID. (id=${validated.messageId})`);
         }
 
-        return nmeaGps.getMessage();
+        return message;
     }
 }

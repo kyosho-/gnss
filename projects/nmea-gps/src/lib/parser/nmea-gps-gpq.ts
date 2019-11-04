@@ -5,20 +5,6 @@ import { Message } from '../model/message';
 import { MessageGpq } from '../model/message-gpq';
 
 export class NmeaGpsGpq extends NmeaGps {
-
-    /**
-     * Field parameter number.
-     */
-    public static readonly FIELD_NUM = 1;
-
-    /**
-     * validate data
-     * @param mid message ID.
-     */
-    validateMessageId(mid: MessageId): boolean {
-        return mid === MessageId.GPQ;
-    }
-
     /**
      * parse data
      * @param tid talker ID
@@ -26,14 +12,12 @@ export class NmeaGpsGpq extends NmeaGps {
      * @param message message
      */
     parse(tid: TalkerId, mid: MessageId, message: string): Message {
+        // カンマ区切りを分割するだけならば、パーサを一つにまとめられると思う。
+        // TODO: 1つにまとめる方向で検討する。
         const splitted = message.split(NmeaGps.FIELD_DELIMITER);
-        if (splitted.length !== NmeaGpsGpq.FIELD_NUM) {
+        if (splitted.length !== MessageGpq.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${message})`);
         }
-        return {
-            talkerId: tid,
-            messageId: mid,
-            msgId: splitted[0]
-        } as MessageGpq;
+        return new MessageGpq(tid, mid, splitted);
     }
 }

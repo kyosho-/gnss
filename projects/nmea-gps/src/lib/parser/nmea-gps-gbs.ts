@@ -8,20 +8,6 @@ import { MessageGbs } from '../model/message-gbs';
  * NMEA GBS Sentence
  */
 export class NmeaGpsGbs extends NmeaGps {
-
-    /**
-     * Field parameter number.
-     */
-    public static readonly FIELD_NUM = 10;
-
-    /**
-     * validate data
-     * @param mid message ID.
-     */
-    validateMessageId(mid: MessageId): boolean {
-        return mid === MessageId.GBS;
-    }
-
     /**
      * parse data
      * @param tid talker ID
@@ -29,23 +15,12 @@ export class NmeaGpsGbs extends NmeaGps {
      * @param message message
      */
     parse(tid: TalkerId, mid: MessageId, message: string): Message {
+        // カンマ区切りを分割するだけならば、パーサを一つにまとめられると思う。
+        // TODO: 1つにまとめる方向で検討する。
         const splitted = message.split(NmeaGps.FIELD_DELIMITER);
-        if (splitted.length !== NmeaGpsGbs.FIELD_NUM) {
+        if (splitted.length !== MessageGbs.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${message})`);
         }
-        return {
-            talkerId: tid,
-            messageId: mid,
-            time: splitted[0],
-            errLat: Number.parseFloat(splitted[1]),
-            errLon: Number.parseFloat(splitted[2]),
-            errAlt: Number.parseFloat(splitted[3]),
-            svid: Number.parseInt(splitted[4], 10),
-            prob: Number.parseInt(splitted[5], 10),
-            bias: Number.parseFloat(splitted[6]),
-            stddev: Number.parseFloat(splitted[7]),
-            systemId: Number.parseInt(splitted[8], 10),
-            signalId: Number.parseInt(splitted[9], 10)
-        } as MessageGbs;
+        return new MessageGbs(tid, mid, splitted);
     }
 }
