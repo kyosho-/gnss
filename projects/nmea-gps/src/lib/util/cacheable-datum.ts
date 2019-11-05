@@ -1,5 +1,5 @@
-import { mapToEnum } from '@kyosho-/nmea';
-import { Datum } from '../model';
+import { mapToEnum } from './map-to-enum';
+import { Datum } from '../model/datum.enum';
 
 export class CacheableDatum {
     private raw: string;

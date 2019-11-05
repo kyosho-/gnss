@@ -1,7 +1,12 @@
 export * from './datum.enum';
 export * from './talker-id.enum';
 export * from './message-id.enum';
+export * from './dm';
+export * from './ns.enum';
+export * from './ew.enum';
 export * from './satellite';
+export * from './time';
+export * from './ymd';
 
 export * from './message';
 export * from './message-dtm';

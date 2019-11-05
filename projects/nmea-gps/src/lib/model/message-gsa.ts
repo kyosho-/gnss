@@ -16,6 +16,8 @@ export class MessageGsa extends Message {
      */
     static readonly FIELD_NUM = 18;
 
+    private fields: string[];
+
     private opModeCache: string;
     private navModeCache: CacheableInteger;
     private svidCache: CacheableIntegerArray;
@@ -30,25 +32,55 @@ export class MessageGsa extends Message {
         fields: string[]) {
         super(talkerId, messageId);
 
-        if (fields.length !== MessageGsa.FIELD_NUM) {
+        // validation
+        if (undefined === fields || fields.length !== MessageGsa.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${fields})`);
         }
-        // TODO: コンストラクタではstring[]のみを保持しておきたい。
-        // 各アクセサが呼ばれたときにキャッシュを構成することで、遅延実行を実現する。
-        this.opModeCache = fields[0];
-        this.navModeCache = new CacheableInteger(fields[1]);
-        this.svidCache = new CacheableIntegerArray(fields.slice(2, 14));
-        this.pdopCache = new CacheableFloat(fields[14]);
-        this.hdopCache = new CacheableFloat(fields[15]);
-        this.vdopCache = new CacheableFloat(fields[16]);
-        this.systemIdCache = new CacheableInteger(fields[17]);
+
+        // save
+        this.fields = fields;
     }
 
-    get opMode(): string { return this.opModeCache; }
-    get navMode(): number { return this.navModeCache.value; }
-    get svid(): number[] { return this.svidCache.value; }
-    get pdop(): number { return this.pdopCache.value; }
-    get hdop(): number { return this.hdopCache.value; }
-    get vdop(): number { return this.vdopCache.value; }
-    get systemId(): number { return this.systemIdCache.value; }
+    get opMode(): string {
+        if (undefined === this.opModeCache) {
+            this.opModeCache = this.fields[0];
+        }
+        return this.opModeCache;
+    }
+    get navMode(): number {
+        if (undefined === this.navModeCache) {
+            this.navModeCache = new CacheableInteger(this.fields[1]);
+        }
+        return this.navModeCache.value;
+    }
+    get svid(): number[] {
+        if (undefined === this.svidCache) {
+            this.svidCache = new CacheableIntegerArray(this.fields.slice(2, 14));
+        }
+        return this.svidCache.value;
+    }
+    get pdop(): number {
+        if (undefined === this.pdopCache) {
+            this.pdopCache = new CacheableFloat(this.fields[14]);
+        }
+        return this.pdopCache.value;
+    }
+    get hdop(): number {
+        if (undefined === this.hdopCache) {
+            this.hdopCache = new CacheableFloat(this.fields[15]);
+        }
+        return this.hdopCache.value;
+    }
+    get vdop(): number {
+        if (undefined === this.vdopCache) {
+            this.vdopCache = new CacheableFloat(this.fields[16]);
+        }
+        return this.vdopCache.value;
+    }
+    get systemId(): number {
+        if (undefined === this.systemIdCache) {
+            this.systemIdCache = new CacheableInteger(this.fields[17]);
+        }
+        return this.systemIdCache.value;
+    }
 }

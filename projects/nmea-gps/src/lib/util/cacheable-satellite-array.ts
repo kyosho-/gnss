@@ -1,4 +1,4 @@
-import { Satellite } from '../model';
+import { Satellite } from '../model/satellite';
 
 export class CacheableSatelliteArray {
     private raw: string[][];

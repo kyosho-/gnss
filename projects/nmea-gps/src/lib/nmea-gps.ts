@@ -1,8 +1,10 @@
-import { TalkerId } from '../model/talker-id.enum';
-import { MessageId } from '../model/message-id.enum';
-import { Message } from '../model/message';
-import { MessageSummary } from '../model/message-summary';
-import { Nmea, mapToEnum } from '@kyosho-/nmea';
+import { Nmea } from '@kyosho-/nmea';
+
+import { mapToEnum } from './util/map-to-enum';
+import { TalkerId } from './model/talker-id.enum';
+import { MessageId } from './model/message-id.enum';
+import { Message } from './model/message';
+import { MessageSummary } from './model/message-summary';
 
 /**
  * NMEA Base Sentence
@@ -25,7 +27,7 @@ export abstract class NmeaGps extends Nmea {
      */
     private message: Message;
 
-    static isStandard(nmea: Nmea): MessageSummary {
+    static summary(nmea: Nmea): MessageSummary {
         const address = nmea.getAddress();
         if (address.length !== NmeaGps.ADDRESS_LENGTH) {
             return { isStandard: false };
@@ -56,7 +58,7 @@ export abstract class NmeaGps extends Nmea {
         super();
 
         // validate
-        const result = NmeaGps.isStandard(input);
+        const result = NmeaGps.summary(input);
         this.validate(input, result);
 
         // assign

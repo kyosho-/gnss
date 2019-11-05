@@ -13,7 +13,7 @@ export class MessageGbq extends Message {
      */
     static readonly FIELD_NUM = 1;
 
-    private msgIdCache: string;
+    private fields: string[];
 
     constructor(
         talkerId: TalkerId,
@@ -21,13 +21,16 @@ export class MessageGbq extends Message {
         fields: string[]) {
         super(talkerId, messageId);
 
-        if (fields.length !== MessageGbq.FIELD_NUM) {
+        // validation
+        if (undefined === fields || fields.length !== MessageGbq.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${fields})`);
         }
-        // TODO: コンストラクタではstring[]のみを保持しておきたい。
-        // 各アクセサが呼ばれたときにキャッシュを構成することで、遅延実行を実現する。
-        this.msgIdCache = fields[0];
+
+        // save
+        this.fields = fields;
     }
 
-    get msgId(): string { return this.msgIdCache; }
+    get msgId(): string {
+        return this.fields[0];
+    }
 }

@@ -1,4 +1,4 @@
-import { mapToEnum } from '@kyosho-/nmea';
+import { mapToEnum } from './map-to-enum';
 import { Ns } from '../model/ns.enum';
 
 export class CacheableNs {

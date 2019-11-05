@@ -1,4 +1,4 @@
-import { mapToEnum } from '@kyosho-/nmea';
+import { mapToEnum } from './map-to-enum';
 import { Ew } from '../model/ew.enum';
 
 export class CacheableEw {

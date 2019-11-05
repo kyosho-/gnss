@@ -23,6 +23,8 @@ export class MessageGga extends Message {
      */
     static readonly FIELD_NUM = 14;
 
+    private fields: string[];
+
     private timeCache: CacheableTime;
     private latCache: CacheableDm;
     private nsCache: CacheableNs;
@@ -44,39 +46,97 @@ export class MessageGga extends Message {
         fields: string[]) {
         super(talkerId, messageId);
 
-        if (fields.length !== MessageGga.FIELD_NUM) {
+        // validation
+        if (undefined === fields || fields.length !== MessageGga.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${fields})`);
         }
-        // TODO: コンストラクタではstring[]のみを保持しておきたい。
-        // 各アクセサが呼ばれたときにキャッシュを構成することで、遅延実行を実現する。
-        this.timeCache = new CacheableTime(fields[0]);
-        this.latCache = new CacheableDm(fields[2], fields[1]);
-        this.nsCache = new CacheableNs(fields[2]);
-        this.lonCache = new CacheableDm(fields[4], fields[3]);
-        this.ewCache = new CacheableEw(fields[4]);
-        this.qualityCache = new CacheableInteger(fields[5]);
-        this.numSvCache = new CacheableInteger(fields[6]);
-        this.hdopCache = new CacheableFloat(fields[7]);
-        this.altCache = new CacheableFloat(fields[8]);
-        this.altUnitCache = fields[9];
-        this.sepCache = new CacheableFloat(fields[10]);
-        this.sepUnitCache = fields[11];
-        this.diffAgeCache = new CacheableFloat(fields[12]);
-        this.diffStationCache = new CacheableFloat(fields[13]);
+
+        // save
+        this.fields = fields;
     }
 
-    get time(): Time { return this.timeCache.value; }
-    get lat(): Dm { return this.latCache.value; }
-    get ns(): Ns { return this.nsCache.value; }
-    get lon(): Dm { return this.lonCache.value; }
-    get ew(): Ew { return this.ewCache.value; }
-    get quality(): number { return this.qualityCache.value; }
-    get numSv(): number { return this.numSvCache.value; }
-    get hdop(): number { return this.hdopCache.value; }
-    get alt(): number { return this.altCache.value; }
-    get altUnit(): string { return this.altUnitCache; }
-    get sep(): number { return this.sepCache.value; }
-    get sepUnit(): string { return this.sepUnitCache; }
-    get diffAge(): number { return this.diffAgeCache.value; }
-    get diffStation(): number { return this.diffStationCache.value; }
+    get time(): Time {
+        if (undefined === this.timeCache) {
+            this.timeCache = new CacheableTime(this.fields[0]);
+        }
+        return this.timeCache.value;
+    }
+    get lat(): Dm {
+        if (undefined === this.latCache) {
+            this.latCache = new CacheableDm(this.fields[2], this.fields[1]);
+        }
+        return this.latCache.value;
+    }
+    get ns(): Ns {
+        if (undefined === this.nsCache) {
+            this.nsCache = new CacheableNs(this.fields[2]);
+        }
+        return this.nsCache.value;
+    }
+    get lon(): Dm {
+        if (undefined === this.lonCache) {
+            this.lonCache = new CacheableDm(this.fields[4], this.fields[3]);
+        }
+        return this.lonCache.value;
+    }
+    get ew(): Ew {
+        if (undefined === this.ewCache) {
+            this.ewCache = new CacheableEw(this.fields[4]);
+        }
+        return this.ewCache.value;
+    }
+    get quality(): number {
+        if (undefined === this.qualityCache) {
+            this.qualityCache = new CacheableInteger(this.fields[5]);
+        }
+        return this.qualityCache.value;
+    }
+    get numSv(): number {
+        if (undefined === this.numSvCache) {
+            this.numSvCache = new CacheableInteger(this.fields[6]);
+        }
+        return this.numSvCache.value;
+    }
+    get hdop(): number {
+        if (undefined === this.hdopCache) {
+            this.hdopCache = new CacheableFloat(this.fields[7]);
+        }
+        return this.hdopCache.value;
+    }
+    get alt(): number {
+        if (undefined === this.altCache) {
+            this.altCache = new CacheableFloat(this.fields[8]);
+        }
+        return this.altCache.value;
+    }
+    get altUnit(): string {
+        if (undefined === this.altUnitCache) {
+            this.altUnitCache = this.fields[9];
+        }
+        return this.altUnitCache;
+    }
+    get sep(): number {
+        if (undefined === this.sepCache) {
+            this.sepCache = new CacheableFloat(this.fields[10]);
+        }
+        return this.sepCache.value;
+    }
+    get sepUnit(): string {
+        if (undefined === this.sepUnitCache) {
+            this.sepUnitCache = this.fields[11];
+        }
+        return this.sepUnitCache;
+    }
+    get diffAge(): number {
+        if (undefined === this.diffAgeCache) {
+            this.diffAgeCache = new CacheableFloat(this.fields[12]);
+        }
+        return this.diffAgeCache.value;
+    }
+    get diffStation(): number {
+        if (undefined === this.diffStationCache) {
+            this.diffStationCache = new CacheableFloat(this.fields[13]);
+        }
+        return this.diffStationCache.value;
+    }
 }

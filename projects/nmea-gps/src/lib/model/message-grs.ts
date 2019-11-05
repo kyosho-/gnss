@@ -18,6 +18,8 @@ export class MessageGrs extends Message {
     static readonly FIELD_NUM = 16;
     static readonly RESIDUAL_NUM = 12;
 
+    private fields: string[];
+
     private timeCache: CacheableTime;
     private modeCache: CacheableInteger;
     private residualCache: CacheableFloatArray;
@@ -30,21 +32,43 @@ export class MessageGrs extends Message {
         fields: string[]) {
         super(talkerId, messageId);
 
-        if (fields.length !== MessageGrs.FIELD_NUM) {
+        // validation
+        if (undefined === fields || fields.length !== MessageGrs.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${fields})`);
         }
-        // TODO: コンストラクタではstring[]のみを保持しておきたい。
-        // 各アクセサが呼ばれたときにキャッシュを構成することで、遅延実行を実現する。
-        this.timeCache = new CacheableTime(fields[0]);
-        this.modeCache = new CacheableInteger(fields[1]);
-        this.residualCache = new CacheableFloatArray(fields.slice(2, 14));
-        this.systemIdCache = new CacheableInteger(fields[14]);
-        this.signalIdCache = new CacheableInteger(fields[15]);
+
+        // save
+        this.fields = fields;
     }
 
-    get time(): Time { return this.timeCache.value; }
-    get mode(): number { return this.modeCache.value; }
-    get residual(): number[] { return this.residualCache.value; }
-    get systemId(): number { return this.systemIdCache.value; }
-    get signalId(): number { return this.signalIdCache.value; }
+    get time(): Time {
+        if (undefined === this.timeCache) {
+            this.timeCache = new CacheableTime(this.fields[0]);
+        }
+        return this.timeCache.value;
+    }
+    get mode(): number {
+        if (undefined === this.modeCache) {
+            this.modeCache = new CacheableInteger(this.fields[1]);
+        }
+        return this.modeCache.value;
+    }
+    get residual(): number[] {
+        if (undefined === this.residualCache) {
+            this.residualCache = new CacheableFloatArray(this.fields.slice(2, 14));
+        }
+        return this.residualCache.value;
+    }
+    get systemId(): number {
+        if (undefined === this.systemIdCache) {
+            this.systemIdCache = new CacheableInteger(this.fields[14]);
+        }
+        return this.systemIdCache.value;
+    }
+    get signalId(): number {
+        if (undefined === this.signalIdCache) {
+            this.signalIdCache = new CacheableInteger(this.fields[15]);
+        }
+        return this.signalIdCache.value;
+    }
 }

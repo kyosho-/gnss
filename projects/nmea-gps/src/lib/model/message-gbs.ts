@@ -2,9 +2,6 @@ import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Time } from './time';
-import { CacheableFloat } from '../util/cacheable-float';
-import { CacheableInteger } from '../util/cacheable-integer';
-import { CacheableTime } from '../util/cacheable-time';
 
 export class MessageGbs extends Message {
     /**
@@ -17,16 +14,18 @@ export class MessageGbs extends Message {
      */
     public static readonly FIELD_NUM = 10;
 
-    private timeCache: CacheableTime;
-    private errLatCache: CacheableFloat;
-    private errLonCache: CacheableFloat;
-    private errAltCache: CacheableFloat;
-    private svidCache: CacheableInteger;
-    private probCache: CacheableInteger;
-    private biasCache: CacheableFloat;
-    private stddevCache: CacheableFloat;
-    private systemIdCache: CacheableInteger;
-    private signalIdCache: CacheableInteger;
+    private fields: string[];
+
+    private timeCache: Time;
+    private errLatCache: number; // float
+    private errLonCache: number; // float
+    private errAltCache: number; // float
+    private svidCache: number; // int
+    private probCache: number; // int
+    private biasCache: number; // float
+    private stddevCache: number; // float
+    private systemIdCache: number; // int
+    private signalIdCache: number; // int
 
     constructor(
         talkerId: TalkerId,
@@ -34,31 +33,82 @@ export class MessageGbs extends Message {
         fields: string[]) {
         super(talkerId, messageId);
 
-        if (fields.length !== MessageGbs.FIELD_NUM) {
+        // validation
+        if (undefined === fields || fields.length !== MessageGbs.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${fields})`);
         }
-        // TODO: コンストラクタではstring[]のみを保持しておきたい。
-        // 各アクセサが呼ばれたときにキャッシュを構成することで、遅延実行を実現する。
-        this.timeCache = new CacheableTime(fields[0]);
-        this.errLatCache = new CacheableFloat(fields[1]);
-        this.errLonCache = new CacheableFloat(fields[2]);
-        this.errAltCache = new CacheableFloat(fields[3]);
-        this.svidCache = new CacheableInteger(fields[4]);
-        this.probCache = new CacheableInteger(fields[5]);
-        this.biasCache = new CacheableFloat(fields[6]);
-        this.stddevCache = new CacheableFloat(fields[7]);
-        this.systemIdCache = new CacheableInteger(fields[8]);
-        this.signalIdCache = new CacheableInteger(fields[9]);
+
+        // save
+        this.fields = fields;
     }
 
-    get time(): Time { return this.timeCache.value; }
-    get errLat(): number { return this.errLatCache.value; }
-    get errLon(): number { return this.errLonCache.value; }
-    get errAlt(): number { return this.errAltCache.value; }
-    get svid(): number { return this.svidCache.value; }
-    get prob(): number { return this.probCache.value; }
-    get bias(): number { return this.biasCache.value; }
-    get stddev(): number { return this.stddevCache.value; }
-    get systemId(): number { return this.systemIdCache.value; }
-    get signalId(): number { return this.signalIdCache.value; }
+    get time(): Time {
+        if (undefined === this.timeCache) {
+            this.timeCache = Time.parse(this.fields[0]);
+        }
+        return this.timeCache;
+    }
+
+    get errLat(): number {
+        if (undefined === this.errLatCache) {
+            this.errLatCache = Number.parseFloat(this.fields[1]);
+        }
+        return this.errLatCache;
+    }
+
+    get errLon(): number {
+        if (undefined === this.errLonCache) {
+            this.errLonCache = Number.parseFloat(this.fields[2]);
+        }
+        return this.errLonCache;
+    }
+
+    get errAlt(): number {
+        if (undefined === this.errAltCache) {
+            this.errAltCache = Number.parseFloat(this.fields[3]);
+        }
+        return this.errAltCache;
+    }
+
+    get svid(): number {
+        if (undefined === this.svidCache) {
+            this.svidCache = Number.parseInt(this.fields[4], 10);
+        }
+        return this.svidCache;
+    }
+
+    get prob(): number {
+        if (undefined === this.probCache) {
+            this.probCache = Number.parseInt(this.fields[5], 10);
+        }
+        return this.probCache;
+    }
+
+    get bias(): number {
+        if (undefined === this.biasCache) {
+            this.biasCache = Number.parseFloat(this.fields[6]);
+        }
+        return this.biasCache;
+    }
+
+    get stddev(): number {
+        if (undefined === this.stddevCache) {
+            this.stddevCache = Number.parseFloat(this.fields[7]);
+        }
+        return this.stddevCache;
+    }
+
+    get systemId(): number {
+        if (undefined === this.systemIdCache) {
+            this.systemIdCache = Number.parseInt(this.fields[8], 10);
+        }
+        return this.systemIdCache;
+    }
+
+    get signalId(): number {
+        if (undefined === this.signalIdCache) {
+            this.signalIdCache = Number.parseInt(this.fields[9], 10);
+        }
+        return this.signalIdCache;
+    }
 }

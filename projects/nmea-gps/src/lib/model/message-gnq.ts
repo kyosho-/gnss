@@ -21,11 +21,12 @@ export class MessageGnq extends Message {
         fields: string[]) {
         super(talkerId, messageId);
 
-        if (fields.length !== MessageGnq.FIELD_NUM) {
+        // validation
+        if (undefined === fields || fields.length !== MessageGnq.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${fields})`);
         }
-        // TODO: コンストラクタではstring[]のみを保持しておきたい。
-        // 各アクセサが呼ばれたときにキャッシュを構成することで、遅延実行を実現する。
+
+        // save
         this.msgIdCache = fields[0];
     }
 

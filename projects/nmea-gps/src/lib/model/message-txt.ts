@@ -14,6 +14,8 @@ export class MessageTxt extends Message {
      */
     static readonly FIELD_NUM = 4;
 
+    private fields: string[];
+
     private numMsgCache: CacheableInteger;
     private msgNumCache: CacheableInteger;
     private msgTypeCache: CacheableInteger;
@@ -25,19 +27,37 @@ export class MessageTxt extends Message {
         fields: string[]) {
         super(talkerId, messageId);
 
-        if (fields.length !== MessageTxt.FIELD_NUM) {
+        // validation
+        if (undefined === fields || fields.length !== MessageTxt.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${fields})`);
         }
-        // TODO: コンストラクタではstring[]のみを保持しておきたい。
-        // 各アクセサが呼ばれたときにキャッシュを構成することで、遅延実行を実現する。
-        this.numMsgCache = new CacheableInteger(fields[0]);
-        this.msgNumCache = new CacheableInteger(fields[1]);
-        this.msgTypeCache = new CacheableInteger(fields[2]);
-        this.textCache = fields[3];
+
+        // save
+        this.fields = fields;
     }
 
-    get numMsg(): number { return this.numMsgCache.value; }
-    get msgNum(): number { return this.msgNumCache.value; }
-    get msgType(): number { return this.msgTypeCache.value; }
-    get text(): string { return this.textCache; }
+    get numMsg(): number {
+        if (undefined === this.numMsgCache) {
+            this.numMsgCache = new CacheableInteger(this.fields[0]);
+        }
+        return this.numMsgCache.value;
+    }
+    get msgNum(): number {
+        if (undefined === this.msgNumCache) {
+            this.msgNumCache = new CacheableInteger(this.fields[1]);
+        }
+        return this.msgNumCache.value;
+    }
+    get msgType(): number {
+        if (undefined === this.msgTypeCache) {
+            this.msgTypeCache = new CacheableInteger(this.fields[2]);
+        }
+        return this.msgTypeCache.value;
+    }
+    get text(): string {
+        if (undefined === this.textCache) {
+            this.textCache = this.fields[3];
+        }
+        return this.textCache;
+    }
 }

@@ -4,10 +4,7 @@ import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Ns } from './ns.enum';
 import { Ew } from './ew.enum';
-import { CacheableDatum } from '../util/cacheable-datum';
-import { CacheableFloat } from '../util/cacheable-float';
-import { CacheableEw } from '../util/cacheable-ew';
-import { CacheableNs } from '../util/cacheable-ns';
+import { mapToEnum } from '../util/map-to-enum';
 
 export class MessageDtm extends Message {
     /**
@@ -20,14 +17,16 @@ export class MessageDtm extends Message {
      */
     static readonly FIELD_NUM = 8;
 
-    private datumCache: CacheableDatum;
-    private subDatumCache: string;
-    private latCache: CacheableFloat;
-    private nsCache: CacheableNs;
-    private lonCache: CacheableFloat;
-    private ewCache: CacheableEw;
-    private altCache: CacheableFloat;
-    private refDatumCache: CacheableDatum;
+    private fields: string[];
+
+    private datumCache: Datum;
+    // private subDatumCache: string;
+    private latCache: number; // float
+    private nsCache: Ns;
+    private lonCache: number; // float
+    private ewCache: Ew;
+    private altCache: number; // float
+    private refDatumCache: Datum;
 
     constructor(
         talkerId: TalkerId,
@@ -35,28 +34,65 @@ export class MessageDtm extends Message {
         fields: string[]) {
         super(talkerId, messageId);
 
-        if (fields.length !== MessageDtm.FIELD_NUM) {
+        // validation
+        if (undefined === fields || fields.length !== MessageDtm.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${fields})`);
         }
 
-        // TODO: コンストラクタではstring[]のみを保持しておきたい。
-        // 各アクセサが呼ばれたときにキャッシュを構成することで、遅延実行を実現する。
-        this.datumCache = new CacheableDatum(fields[0]);
-        this.subDatumCache = fields[1];
-        this.latCache = new CacheableFloat(fields[2]);
-        this.nsCache = new CacheableNs(fields[3]);
-        this.lonCache = new CacheableFloat(fields[4]);
-        this.ewCache = new CacheableEw(fields[5]);
-        this.altCache = new CacheableFloat(fields[6]);
-        this.refDatumCache = new CacheableDatum(fields[7]);
+        // save
+        this.fields = fields;
     }
 
-    get datum(): Datum { return this.datumCache.value; }
-    get subDatum(): string { return this.subDatumCache; }
-    get lat(): number { return this.latCache.value; }
-    get ns(): Ns { return this.nsCache.value; }
-    get lon(): number { return this.lonCache.value; }
-    get ew(): Ew { return this.ewCache.value; }
-    get alt(): number { return this.altCache.value; }
-    get refDatum(): Datum { return this.refDatumCache.value; }
+    get datum(): Datum {
+        if (undefined === this.datumCache) {
+            this.datumCache = mapToEnum(Datum, this.fields[0]);
+        }
+        return this.datumCache;
+    }
+
+    get subDatum(): string {
+        return this.fields[1];
+    }
+
+    get lat(): number {
+        if (undefined === this.latCache) {
+            this.latCache = Number.parseFloat(this.fields[2]);
+        }
+        return this.latCache;
+    }
+
+    get ns(): Ns {
+        if (undefined === this.nsCache) {
+            this.nsCache = mapToEnum(Ns, this.fields[3]);
+        }
+        return this.nsCache;
+    }
+
+    get lon(): number {
+        if (undefined === this.lonCache) {
+            this.lonCache = Number.parseFloat(this.fields[4]);
+        }
+        return this.lonCache;
+    }
+
+    get ew(): Ew {
+        if (undefined === this.ewCache) {
+            this.ewCache = mapToEnum(Ew, this.fields[5]);
+        }
+        return this.ewCache;
+    }
+
+    get alt(): number {
+        if (undefined === this.altCache) {
+            this.altCache = Number.parseFloat(this.fields[6]);
+        }
+        return this.altCache;
+    }
+
+    get refDatum(): Datum {
+        if (undefined === this.refDatumCache) {
+            this.refDatumCache = mapToEnum(Datum, this.fields[7]);
+        }
+        return this.refDatumCache;
+    }
 }

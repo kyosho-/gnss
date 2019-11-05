@@ -16,5 +16,6 @@ export class Message {
     }
 
     get talkerId(): TalkerId { return this.talkerIdCache; }
+
     get messageId(): MessageId { return this.messageIdCache; }
 }

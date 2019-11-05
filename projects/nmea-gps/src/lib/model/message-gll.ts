@@ -21,6 +21,8 @@ export class MessageGll extends Message {
      */
     static readonly FIELD_NUM = 7;
 
+    private fields: string[];
+
     private latCache: CacheableDm;
     private nsCache: CacheableNs;
     private lonCache: CacheableDm;
@@ -35,25 +37,55 @@ export class MessageGll extends Message {
         fields: string[]) {
         super(talkerId, messageId);
 
-        if (fields.length !== MessageGll.FIELD_NUM) {
+        // validation
+        if (undefined === fields || fields.length !== MessageGll.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${fields})`);
         }
-        // TODO: コンストラクタではstring[]のみを保持しておきたい。
-        // 各アクセサが呼ばれたときにキャッシュを構成することで、遅延実行を実現する。
-        this.latCache = new CacheableDm(fields[1], fields[0]);
-        this.nsCache = new CacheableNs(fields[1]);
-        this.lonCache = new CacheableDm(fields[3], fields[2]);
-        this.ewCache = new CacheableEw(fields[3]);
-        this.timeCache = new CacheableTime(fields[4]);
-        this.statusCache = fields[5];
-        this.posModeCache = fields[6];
+
+        // save
+        this.fields = fields;
     }
 
-    get lat(): Dm { return this.latCache.value; }
-    get ns(): Ns { return this.nsCache.value; }
-    get lon(): Dm { return this.lonCache.value; }
-    get ew(): Ew { return this.ewCache.value; }
-    get time(): Time { return this.timeCache.value; }
-    get status(): string { return this.statusCache; }
-    get posMode(): string { return this.posModeCache; }
+    get lat(): Dm {
+        if (undefined === this.latCache) {
+            this.latCache = new CacheableDm(this.fields[1], this.fields[0]);
+        }
+        return this.latCache.value;
+    }
+    get ns(): Ns {
+        if (undefined === this.nsCache) {
+            this.nsCache = new CacheableNs(this.fields[1]);
+        }
+        return this.nsCache.value;
+    }
+    get lon(): Dm {
+        if (undefined === this.lonCache) {
+            this.lonCache = new CacheableDm(this.fields[3], this.fields[2]);
+        }
+        return this.lonCache.value;
+    }
+    get ew(): Ew {
+        if (undefined === this.ewCache) {
+            this.ewCache = new CacheableEw(this.fields[3]);
+        }
+        return this.ewCache.value;
+    }
+    get time(): Time {
+        if (undefined === this.timeCache) {
+            this.timeCache = new CacheableTime(this.fields[4]);
+        }
+        return this.timeCache.value;
+    }
+    get status(): string {
+        if (undefined === this.statusCache) {
+            this.statusCache = this.fields[5];
+        }
+        return this.statusCache;
+    }
+    get posMode(): string {
+        if (undefined === this.posModeCache) {
+            this.posModeCache = this.fields[6];
+        }
+        return this.posModeCache;
+    }
 }

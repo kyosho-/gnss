@@ -16,6 +16,8 @@ export class MessageGst extends Message {
      */
     static readonly FIELD_NUM = 8;
 
+    private fields: string[];
+
     private timeCache: CacheableTime;
     private rangeRmsCache: CacheableFloat;
     private stdMajorCache: CacheableFloat;
@@ -31,27 +33,61 @@ export class MessageGst extends Message {
         fields: string[]) {
         super(talkerId, messageId);
 
-        if (fields.length !== MessageGst.FIELD_NUM) {
+        // validation
+        if (undefined === fields || fields.length !== MessageGst.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${fields})`);
         }
-        // TODO: コンストラクタではstring[]のみを保持しておきたい。
-        // 各アクセサが呼ばれたときにキャッシュを構成することで、遅延実行を実現する。
-        this.timeCache = new CacheableTime(fields[0]);
-        this.rangeRmsCache = new CacheableFloat(fields[1]);
-        this.stdMajorCache = new CacheableFloat(fields[2]);
-        this.stdMinorCache = new CacheableFloat(fields[3]);
-        this.orientCache = new CacheableFloat(fields[4]);
-        this.stdLatCache = new CacheableFloat(fields[5]);
-        this.stdLongCache = new CacheableFloat(fields[6]);
-        this.stdAltCache = new CacheableFloat(fields[7]);
+
+        // save
+        this.fields = fields;
     }
 
-    get time(): Time { return this.timeCache.value; }
-    get rangeRms(): number { return this.rangeRmsCache.value; }
-    get stdMajor(): number { return this.stdMajorCache.value; }
-    get stdMinor(): number { return this.stdMinorCache.value; }
-    get orient(): number { return this.orientCache.value; }
-    get stdLat(): number { return this.stdLatCache.value; }
-    get stdLong(): number { return this.stdLongCache.value; }
-    get stdAlt(): number { return this.stdAltCache.value; }
+    get time(): Time {
+        if (undefined === this.timeCache) {
+            this.timeCache = new CacheableTime(this.fields[0]);
+        }
+        return this.timeCache.value;
+    }
+    get rangeRms(): number {
+        if (undefined === this.rangeRmsCache) {
+            this.rangeRmsCache = new CacheableFloat(this.fields[1]);
+        }
+        return this.rangeRmsCache.value;
+    }
+    get stdMajor(): number {
+        if (undefined === this.stdMajorCache) {
+            this.stdMajorCache = new CacheableFloat(this.fields[2]);
+        }
+        return this.stdMajorCache.value;
+    }
+    get stdMinor(): number {
+        if (undefined === this.stdMinorCache) {
+            this.stdMinorCache = new CacheableFloat(this.fields[3]);
+        }
+        return this.stdMinorCache.value;
+    }
+    get orient(): number {
+        if (undefined === this.orientCache) {
+            this.orientCache = new CacheableFloat(this.fields[4]);
+        }
+        return this.orientCache.value;
+    }
+    get stdLat(): number {
+        if (undefined === this.stdLatCache) {
+            this.stdLatCache = new CacheableFloat(this.fields[5]);
+        }
+        return this.stdLatCache.value;
+    }
+    get stdLong(): number {
+        if (undefined === this.stdLongCache) {
+            this.stdLongCache = new CacheableFloat(this.fields[6]);
+        }
+        return this.stdLongCache.value;
+    }
+    get stdAlt(): number {
+        if (undefined === this.stdAltCache) {
+            this.stdAltCache = new CacheableFloat(this.fields[7]);
+        }
+        return this.stdAltCache.value;
+    }
 }
