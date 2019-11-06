@@ -8,7 +8,18 @@ describe('MessageTxt', () => {
     let nmea = Nmea.parse(input);
     let summary = NmeaGps.summary(nmea);
     let splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    expect(new MessageTxt(summary.talkerId, summary.messageId, splitted)).toBeTruthy();
+    let m = new MessageTxt(summary.talkerId, summary.messageId, splitted);
+    expect(m).toBeTruthy();
+    expect(m.numMsg).toEqual(1);
+    expect(m.numMsg).toEqual(1);
+    expect(m.msgNum).toEqual(1);
+    expect(m.msgNum).toEqual(1);
+    expect(m.msgType).toEqual(2);
+    expect(m.msgType).toEqual(2);
+    expect(m.text).toEqual('u-blox ag - www.u-blox.com');
+    expect(m.text).toEqual('u-blox ag - www.u-blox.com');
+
+
     input = '$GPTXT,01,01,02,ANTARIS ATR0620 HW 00000040*67';
     nmea = Nmea.parse(input);
     summary = NmeaGps.summary(nmea);

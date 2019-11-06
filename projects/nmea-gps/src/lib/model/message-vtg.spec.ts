@@ -8,7 +8,26 @@ describe('MessageVtg', () => {
     const nmea = Nmea.parse(input);
     const summary = NmeaGps.summary(nmea);
     const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    expect(new MessageVtg(summary.talkerId, summary.messageId, splitted)).toBeTruthy();
+    const m = new MessageVtg(summary.talkerId, summary.messageId, splitted);
+    expect(m).toBeTruthy();
+    expect(m.cogt).toEqual(77.52);
+    expect(m.cogt).toEqual(77.52);
+    expect(m.cogtUnit).toEqual('T');
+    expect(m.cogtUnit).toEqual('T');
+    expect(m.cogm).toEqual(NaN);
+    expect(m.cogm).toEqual(NaN);
+    expect(m.cogmUnit).toEqual('M');
+    expect(m.cogmUnit).toEqual('M');
+    expect(m.sogn).toEqual(0.004);
+    expect(m.sogn).toEqual(0.004);
+    expect(m.sognUnit).toEqual('N');
+    expect(m.sognUnit).toEqual('N');
+    expect(m.sogk).toEqual(0.008);
+    expect(m.sogk).toEqual(0.008);
+    expect(m.sogkUnit).toEqual('K');
+    expect(m.sogkUnit).toEqual('K');
+    expect(m.posMode).toEqual('A');
+    expect(m.posMode).toEqual('A');
   });
 
   it('should error on parse method.', () => {

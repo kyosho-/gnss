@@ -14,4 +14,31 @@ describe('Time', () => {
     expect(time.second).toEqual(59);
     expect(time.millisecond).toEqual(99);
   });
+
+  it('should error an instance', () => {
+    try {
+      const target = Time.parse(undefined);
+      fail();
+    } catch (error) {
+      expect(error.message).toEqual('Sentence is undefinced. (sentence=undefined)');
+    }
+  });
+
+  it('should be null.', () => {
+    try {
+      const target = Time.parse('');
+      fail();
+    } catch (error) {
+      expect(error.message).toEqual('Parse Error. (sentence=)');
+    }
+  });
+
+  it('should be parse error.', () => {
+    try {
+      const target = Time.parse('abcdefg');
+      fail();
+    } catch (error) {
+      expect(error.message).toEqual('Parse Error. (sentence=abcdefg)');
+    }
+  });
 });

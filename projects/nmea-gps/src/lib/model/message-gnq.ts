@@ -13,7 +13,7 @@ export class MessageGnq extends Message {
      */
     static readonly FIELD_NUM = 1;
 
-    private msgIdCache: string;
+    private fields: string[];
 
     constructor(
         talkerId: TalkerId,
@@ -27,8 +27,8 @@ export class MessageGnq extends Message {
         }
 
         // save
-        this.msgIdCache = fields[0];
+        this.fields = fields;
     }
 
-    get msgId(): string { return this.msgIdCache; }
+    get msgId(): string { return this.fields[0]; }
 }

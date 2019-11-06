@@ -1,14 +1,11 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
-import { CacheableTime } from '../util/cacheable-time';
-import { CacheableDm } from '../util/cacheable-dm';
-import { CacheableNs } from '../util/cacheable-ns';
-import { CacheableEw } from '../util/cacheable-ew';
 import { Ns } from './ns.enum';
 import { Dm } from './dm';
 import { Ew } from './ew.enum';
 import { Time } from './time';
+import { mapToEnum } from '../util/map-to-enum';
 
 export class MessageGll extends Message {
     /**
@@ -23,13 +20,13 @@ export class MessageGll extends Message {
 
     private fields: string[];
 
-    private latCache: CacheableDm;
-    private nsCache: CacheableNs;
-    private lonCache: CacheableDm;
-    private ewCache: CacheableEw;
-    private timeCache: CacheableTime;
-    private statusCache: string;
-    private posModeCache: string;
+    private latCache: Dm;
+    private nsCache: Ns;
+    private lonCache: Dm;
+    private ewCache: Ew;
+    private timeCache: Time;
+    // private statusCache: string;
+    // private posModeCache: string;
 
     constructor(
         talkerId: TalkerId,
@@ -48,44 +45,38 @@ export class MessageGll extends Message {
 
     get lat(): Dm {
         if (undefined === this.latCache) {
-            this.latCache = new CacheableDm(this.fields[1], this.fields[0]);
+            this.latCache = Dm.parse(this.fields[1], this.fields[0]);
         }
-        return this.latCache.value;
+        return this.latCache;
     }
     get ns(): Ns {
         if (undefined === this.nsCache) {
-            this.nsCache = new CacheableNs(this.fields[1]);
+            this.nsCache = mapToEnum(Ns, this.fields[1]);
         }
-        return this.nsCache.value;
+        return this.nsCache;
     }
     get lon(): Dm {
         if (undefined === this.lonCache) {
-            this.lonCache = new CacheableDm(this.fields[3], this.fields[2]);
+            this.lonCache = Dm.parse(this.fields[3], this.fields[2]);
         }
-        return this.lonCache.value;
+        return this.lonCache;
     }
     get ew(): Ew {
         if (undefined === this.ewCache) {
-            this.ewCache = new CacheableEw(this.fields[3]);
+            this.ewCache = mapToEnum(Ew, this.fields[3]);
         }
-        return this.ewCache.value;
+        return this.ewCache;
     }
     get time(): Time {
         if (undefined === this.timeCache) {
-            this.timeCache = new CacheableTime(this.fields[4]);
+            this.timeCache = Time.parse(this.fields[4]);
         }
-        return this.timeCache.value;
+        return this.timeCache;
     }
     get status(): string {
-        if (undefined === this.statusCache) {
-            this.statusCache = this.fields[5];
-        }
-        return this.statusCache;
+        return this.fields[5];
     }
     get posMode(): string {
-        if (undefined === this.posModeCache) {
-            this.posModeCache = this.fields[6];
-        }
-        return this.posModeCache;
+        return this.fields[6];
     }
 }

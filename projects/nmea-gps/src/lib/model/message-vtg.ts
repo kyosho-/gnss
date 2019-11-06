@@ -1,7 +1,6 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
-import { CacheableFloat } from '../util/cacheable-float';
 
 export class MessageVtg extends Message {
     /**
@@ -16,15 +15,15 @@ export class MessageVtg extends Message {
 
     private fields: string[];
 
-    private cogtCache: CacheableFloat;
-    private cogtUnitCache: string;
-    private cogmCache: CacheableFloat;
-    private cogmUnitCache: string;
-    private sognCache: CacheableFloat;
-    private sognUnitCache: string;
-    private sogkCache: CacheableFloat;
-    private sogkUnitCache: string;
-    private posModeCache: string;
+    private cogtCache: number; // float
+    // private cogtUnitCache: string;
+    private cogmCache: number; // float
+    // private cogmUnitCache: string;
+    private sognCache: number; // float
+    // private sognUnitCache: string;
+    private sogkCache: number; // float
+    // private sogkUnitCache: string;
+    // private posModeCache: string;
 
     constructor(
         talkerId: TalkerId,
@@ -43,56 +42,41 @@ export class MessageVtg extends Message {
 
     get cogt(): number {
         if (undefined === this.cogtCache) {
-            this.cogtCache = new CacheableFloat(this.fields[0]);
+            this.cogtCache = Number.parseFloat(this.fields[0]);
         }
-        return this.cogtCache.value;
+        return this.cogtCache;
     }
     get cogtUnit(): string {
-        if (undefined === this.cogtUnit) {
-            this.cogtUnitCache = this.fields[1];
-        }
-        return this.cogtUnitCache;
+        return this.fields[1];
     }
     get cogm(): number {
         if (undefined === this.cogmCache) {
-            this.cogmCache = new CacheableFloat(this.fields[2]);
+            this.cogmCache = Number.parseFloat(this.fields[2]);
         }
-        return this.cogmCache.value;
+        return this.cogmCache;
     }
     get cogmUnit(): string {
-        if (undefined === this.cogmUnitCache) {
-            this.cogmUnitCache = this.fields[3];
-        }
-        return this.cogmUnitCache;
+        return this.fields[3];
     }
     get sogn(): number {
         if (undefined === this.sognCache) {
-            this.sognCache = new CacheableFloat(this.fields[4]);
+            this.sognCache = Number.parseFloat(this.fields[4]);
         }
-        return this.sognCache.value;
+        return this.sognCache;
     }
     get sognUnit(): string {
-        if (undefined === this.sognUnitCache) {
-            this.sognUnitCache = this.fields[5];
-        }
-        return this.sognUnitCache;
+        return this.fields[5];
     }
     get sogk(): number {
         if (undefined === this.sogkCache) {
-            this.sogkCache = new CacheableFloat(this.fields[6]);
+            this.sogkCache = Number.parseFloat(this.fields[6]);
         }
-        return this.sogkCache.value;
+        return this.sogkCache;
     }
     get sogkUnit(): string {
-        if (undefined === this.sogkUnitCache) {
-            this.sogkUnitCache = this.fields[7];
-        }
-        return this.sogkUnitCache;
+        return this.fields[7];
     }
     get posMode(): string {
-        if (undefined === this.posModeCache) {
-            this.posModeCache = this.fields[8];
-        }
-        return this.posModeCache;
+        return this.fields[8];
     }
 }

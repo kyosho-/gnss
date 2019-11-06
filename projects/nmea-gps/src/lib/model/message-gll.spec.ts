@@ -1,6 +1,8 @@
-import { MessageGll } from './message-gll';
 import { Nmea } from '@kyosho-/nmea';
+import { MessageGll } from './message-gll';
 import { NmeaGps } from '../nmea-gps';
+import { Ns } from './ns.enum';
+import { Ew } from './ew.enum';
 
 describe('MessageGll', () => {
   it('should create an instance', () => {
@@ -8,7 +10,22 @@ describe('MessageGll', () => {
     const nmea = Nmea.parse(input);
     const summary = NmeaGps.summary(nmea);
     const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    expect(new MessageGll(summary.talkerId, summary.messageId, splitted)).toBeTruthy();
+    const m = new MessageGll(summary.talkerId, summary.messageId, splitted);
+    expect(m).toBeTruthy();
+    expect(m.lat).toBeTruthy();
+    expect(m.lat).toBeTruthy();
+    expect(m.ns).toEqual(Ns.N);
+    expect(m.ns).toEqual(Ns.N);
+    expect(m.lon).toBeTruthy();
+    expect(m.lon).toBeTruthy();
+    expect(m.ew).toEqual(Ew.E);
+    expect(m.ew).toEqual(Ew.E);
+    expect(m.time).toBeTruthy();
+    expect(m.time).toBeTruthy();
+    expect(m.status).toBeTruthy('A');
+    expect(m.status).toBeTruthy('A');
+    expect(m.posMode).toBeTruthy('A');
+    expect(m.posMode).toBeTruthy('A');
   });
 
   it('should error on parse method.', () => {

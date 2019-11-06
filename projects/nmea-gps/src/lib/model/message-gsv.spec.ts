@@ -11,6 +11,34 @@ describe('MessageGsv', () => {
     let splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
     sn = new MessageGsv(summary.talkerId, summary.messageId, splitted);
     expect(sn).toBeTruthy();
+    expect(sn.numMsg).toEqual(3);
+    expect(sn.numMsg).toEqual(3);
+    expect(sn.msgNum).toEqual(1);
+    expect(sn.msgNum).toEqual(1);
+    expect(sn.msgNum).toEqual(1);
+    expect(sn.numSv).toEqual(9);
+    expect(sn.numSv).toEqual(9);
+
+    expect(sn.sv[0].svid).toEqual(9);
+    expect(sn.sv[0].elv).toEqual(NaN);
+    expect(sn.sv[0].az).toEqual(NaN);
+    expect(sn.sv[0].cno).toEqual(17);
+
+    expect(sn.sv[1].svid).toEqual(10);
+    expect(sn.sv[1].elv).toEqual(NaN);
+    expect(sn.sv[1].az).toEqual(NaN);
+    expect(sn.sv[1].cno).toEqual(40);
+
+    expect(sn.sv[2].svid).toEqual(12);
+    expect(sn.sv[2].elv).toEqual(NaN);
+    expect(sn.sv[2].az).toEqual(NaN);
+    expect(sn.sv[2].cno).toEqual(49);
+
+    expect(sn.sv[3].svid).toEqual(13);
+    expect(sn.sv[3].elv).toEqual(NaN);
+    expect(sn.sv[3].az).toEqual(NaN);
+    expect(sn.sv[3].cno).toEqual(35);
+
     expect((sn.signalId)).not.toBeUndefined();
 
     input = '$GPGSV,3,2,09,15,,,44,17,,,45,19,,,44,24,,,50,1*64\r\n';
@@ -51,7 +79,7 @@ describe('MessageGsv', () => {
     splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
     sn = new MessageGsv(summary.talkerId, summary.messageId, splitted);
     expect(sn).toBeTruthy();
-    // expect((sn.signalId)).not.toBeUndefined();
+    expect((sn.signalId)).toBeUndefined();
   });
 
   it('should error on parse method.', () => {
@@ -59,6 +87,16 @@ describe('MessageGsv', () => {
     const nmea = Nmea.parse(input);
     const summary = NmeaGps.summary(nmea);
     const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
+
+    try {
+      const message = new MessageGsv(
+        summary.talkerId,
+        summary.messageId,
+        undefined);
+      fail();
+    } catch (error) {
+      expect(error.message).toEqual('fields is undefined.');
+    }
 
     try {
       const message = new MessageGsv(

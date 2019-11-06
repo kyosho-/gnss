@@ -2,8 +2,6 @@ import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Satellite } from './satellite';
-import { CacheableInteger } from '../util/cacheable-integer';
-import { CacheableSatelliteArray } from '../util/cacheable-satellite-array';
 
 export class MessageGsv extends Message {
     /**
@@ -15,15 +13,15 @@ export class MessageGsv extends Message {
     private hasSignalId: boolean;
     private svNum: number;
 
-    private numMsgCache: CacheableInteger;
-    private msgNumCache: CacheableInteger;
-    private numSvCache: CacheableInteger;
-    private svCache: CacheableSatelliteArray;
+    private numMsgCache: number; // int
+    private msgNumCache: number; // int
+    private numSvCache: number; // int
+    private svCache: Satellite[];
     /**
      * NMEA defined GNSS Signal ID, see SignalIdentifiers table (only available in NMEA 4.10and later)
      * option?
      */
-    private signalIdCache: CacheableInteger;
+    private signalIdCache: number; // int
 
     constructor(
         talkerId: TalkerId,
@@ -53,42 +51,40 @@ export class MessageGsv extends Message {
 
     get numMsg(): number {
         if (undefined === this.numMsgCache) {
-            this.numMsgCache = new CacheableInteger(this.fields[0]);
+            this.numMsgCache = Number.parseInt(this.fields[0], 10);
         }
-        return this.numMsgCache.value;
+        return this.numMsgCache;
     }
     get msgNum(): number {
         if (undefined === this.msgNumCache) {
-            this.msgNumCache = new CacheableInteger(this.fields[1]);
+            this.msgNumCache = Number.parseInt(this.fields[1], 10);
         }
-        return this.msgNumCache.value;
+        return this.msgNumCache;
     }
     get numSv(): number {
         if (undefined === this.numSvCache) {
-            this.numSvCache = new CacheableInteger(this.fields[2]);
+            this.numSvCache = Number.parseInt(this.fields[2], 10);
         }
-        return this.numSvCache.value;
+        return this.numSvCache;
     }
     get sv(): Satellite[] {
         if (undefined === this.svCache) {
-            const rawArray: string[][] = [];
+            this.svCache = [];
             for (let i = 0, offset = 3; i < this.svNum; i++ , offset += 4) {
-                const raw = [];
-                raw.push(this.fields[offset + 0]);
-                raw.push(this.fields[offset + 1]);
-                raw.push(this.fields[offset + 2]);
-                raw.push(this.fields[offset + 3]);
-                rawArray.push(raw);
+                const svid = Number.parseInt(this.fields[offset + 0], 10);
+                const elv = Number.parseInt(this.fields[offset + 1], 10);
+                const az = Number.parseInt(this.fields[offset + 2], 10);
+                const cno = Number.parseInt(this.fields[offset + 3], 10);
+                this.svCache.push(new Satellite(svid, elv, az, cno));
             }
-            this.svCache = new CacheableSatelliteArray(rawArray);
         }
-        return this.svCache.value;
+        return this.svCache;
     }
     get signalId(): number {
         if (undefined === this.signalIdCache && this.hasSignalId) {
-            this.signalIdCache = new CacheableInteger(this.fields[this.fields.length - 1]);
+            this.signalIdCache = Number.parseInt(this.fields[this.fields.length - 1], 10);
         }
         return undefined === this.signalIdCache ?
-            undefined : this.signalIdCache.value;
+            undefined : this.signalIdCache;
     }
 }

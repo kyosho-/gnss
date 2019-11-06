@@ -1,17 +1,12 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
-import { CacheableFloat } from '../util/cacheable-float';
-import { CacheableTime } from '../util/cacheable-time';
-import { CacheableDm } from '../util/cacheable-dm';
-import { CacheableNs } from '../util/cacheable-ns';
-import { CacheableEw } from '../util/cacheable-ew';
-import { CacheableYmd } from '../util/cacheable-ymd';
 import { Time } from './time';
 import { Dm } from './dm';
 import { Ns } from './ns.enum';
 import { Ew } from './ew.enum';
 import { Ymd } from './ymd';
+import { mapToEnum } from '../util/map-to-enum';
 
 export class MessageRmc extends Message {
     /**
@@ -27,19 +22,19 @@ export class MessageRmc extends Message {
 
     private fields: string[];
 
-    private timeCache: CacheableTime;
-    private statusCache: string;
-    private latCache: CacheableDm;
-    private nsCache: CacheableNs;
-    private lonCache: CacheableDm;
-    private ewCache: CacheableEw;
-    private spdCache: CacheableFloat;
-    private cogCache: CacheableFloat;
-    private dateCache: CacheableYmd;
-    private mvCache: CacheableFloat;
-    private mvEwCache: string;
-    private posModeCache: string;
-    private navStatusCache: string;
+    private timeCache: Time;
+    // private statusCache: string;
+    private latCache: Dm;
+    private nsCache: Ns;
+    private lonCache: Dm;
+    private ewCache: Ew;
+    private spdCache: number; // float
+    private cogCache: number; // float
+    private dateCache: Ymd;
+    private mvCache: number; // float
+    // private mvEwCache: string;
+    // private posModeCache: string;
+    // private navStatusCache: string;
 
     constructor(
         talkerId: TalkerId,
@@ -58,80 +53,69 @@ export class MessageRmc extends Message {
 
     get time(): Time {
         if (undefined === this.timeCache) {
-            this.timeCache = new CacheableTime(this.fields[0]);
+            this.timeCache = Time.parse(this.fields[0]);
         }
-        return this.timeCache.value;
+        return this.timeCache;
     }
     get status(): string {
-        if (undefined === this.statusCache) {
-            this.statusCache = this.fields[1];
-        }
-        return this.statusCache;
+        return this.fields[1];
     }
     get lat(): Dm {
         if (undefined === this.latCache) {
-            this.latCache = new CacheableDm(this.fields[3], this.fields[2]);
+            this.latCache = Dm.parse(this.fields[3], this.fields[2]);
         }
-        return this.latCache.value;
+        return this.latCache;
     }
     get ns(): Ns {
         if (undefined === this.nsCache) {
-            this.nsCache = new CacheableNs(this.fields[3]);
+            this.nsCache = mapToEnum(Ns, this.fields[3]);
         }
-        return this.nsCache.value;
+        return this.nsCache;
     }
     get lon(): Dm {
         if (undefined === this.lonCache) {
-            this.lonCache = new CacheableDm(this.fields[5], this.fields[4]);
+            this.lonCache = Dm.parse(this.fields[5], this.fields[4]);
         }
-        return this.lonCache.value;
+        return this.lonCache;
     }
     get ew(): Ew {
         if (undefined === this.ewCache) {
-            this.ewCache = new CacheableEw(this.fields[5]);
+            this.ewCache = mapToEnum(Ew, this.fields[5]);
         }
-        return this.ewCache.value;
+        return this.ewCache;
     }
     get spd(): number {
         if (undefined === this.spdCache) {
-            this.spdCache = new CacheableFloat(this.fields[6]);
+            this.spdCache = Number.parseFloat(this.fields[6]);
         }
-        return this.spdCache.value;
+        return this.spdCache;
     }
     get cog(): number {
         if (undefined === this.cogCache) {
-            this.cogCache = new CacheableFloat(this.fields[7]);
+            this.cogCache = Number.parseFloat(this.fields[7]);
         }
-        return this.cogCache.value;
+        return this.cogCache;
     }
     get date(): Ymd {
         if (undefined === this.dateCache) {
-            this.dateCache = new CacheableYmd(this.fields[8]);
+            this.dateCache = Ymd.parse(this.fields[8]);
         }
-        return this.dateCache.value;
+        return this.dateCache;
     }
     get mv(): number {
         if (undefined === this.mvCache) {
-            this.mvCache = new CacheableFloat(this.fields[9]);
+            this.mvCache = Number.parseFloat(this.fields[9]);
         }
-        return this.mvCache.value;
+        return this.mvCache;
     }
     get mvEw(): string {
-        if (undefined === this.mvEwCache) {
-            this.mvEwCache = this.fields[10];
-        }
-        return this.mvEwCache;
+        return this.fields[10];
     }
     get posMode(): string {
-        if (undefined === this.posModeCache) {
-            this.posModeCache = this.fields[11];
-        }
-        return this.posModeCache;
+        return this.fields[11];
     }
     get navStatus(): string {
-        if (this.fields.length === MessageRmc.FIELD_NUM_410) {
-            this.navStatusCache = this.fields[12];
-        }
-        return this.navStatusCache;
+        return this.fields.length === MessageRmc.FIELD_NUM_410 ?
+            this.fields[12] : undefined;
     }
 }

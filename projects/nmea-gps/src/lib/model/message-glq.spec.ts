@@ -8,7 +8,10 @@ describe('MessageGlq', () => {
     const nmea = Nmea.parse(input);
     const summary = NmeaGps.summary(nmea);
     const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    expect(new MessageGlq(summary.talkerId, summary.messageId, splitted)).toBeTruthy();
+    const m = new MessageGlq(summary.talkerId, summary.messageId, splitted);
+    expect(m).toBeTruthy();
+    expect(m.msgId).toEqual('RMC');
+    expect(m.msgId).toEqual('RMC');
   });
 
   it('should error on parse method.', () => {

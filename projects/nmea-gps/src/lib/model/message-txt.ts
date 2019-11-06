@@ -1,7 +1,6 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
-import { CacheableInteger } from '../util/cacheable-integer';
 
 export class MessageTxt extends Message {
     /**
@@ -16,10 +15,10 @@ export class MessageTxt extends Message {
 
     private fields: string[];
 
-    private numMsgCache: CacheableInteger;
-    private msgNumCache: CacheableInteger;
-    private msgTypeCache: CacheableInteger;
-    private textCache: string;
+    private numMsgCache: number; // int
+    private msgNumCache: number; // int
+    private msgTypeCache: number; // int
+    // private textCache: string;
 
     constructor(
         talkerId: TalkerId,
@@ -38,26 +37,23 @@ export class MessageTxt extends Message {
 
     get numMsg(): number {
         if (undefined === this.numMsgCache) {
-            this.numMsgCache = new CacheableInteger(this.fields[0]);
+            this.numMsgCache = Number.parseInt(this.fields[0], 10);
         }
-        return this.numMsgCache.value;
+        return this.numMsgCache;
     }
     get msgNum(): number {
         if (undefined === this.msgNumCache) {
-            this.msgNumCache = new CacheableInteger(this.fields[1]);
+            this.msgNumCache = Number.parseInt(this.fields[1], 10);
         }
-        return this.msgNumCache.value;
+        return this.msgNumCache;
     }
     get msgType(): number {
         if (undefined === this.msgTypeCache) {
-            this.msgTypeCache = new CacheableInteger(this.fields[2]);
+            this.msgTypeCache = Number.parseInt(this.fields[2], 10);
         }
-        return this.msgTypeCache.value;
+        return this.msgTypeCache;
     }
     get text(): string {
-        if (undefined === this.textCache) {
-            this.textCache = this.fields[3];
-        }
-        return this.textCache;
+        return this.fields[3];
     }
 }

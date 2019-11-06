@@ -1,9 +1,6 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
-import { CacheableInteger } from '../util/cacheable-integer';
-import { CacheableIntegerArray } from '../util/cacheable-integer-array';
-import { CacheableFloat } from '../util/cacheable-float';
 
 export class MessageGsa extends Message {
     /**
@@ -18,13 +15,13 @@ export class MessageGsa extends Message {
 
     private fields: string[];
 
-    private opModeCache: string;
-    private navModeCache: CacheableInteger;
-    private svidCache: CacheableIntegerArray;
-    private pdopCache: CacheableFloat;
-    private hdopCache: CacheableFloat;
-    private vdopCache: CacheableFloat;
-    private systemIdCache: CacheableInteger;
+    // private opModeCache: string;
+    private navModeCache: number; // int
+    private svidCache: number[]; // int
+    private pdopCache: number; // float
+    private hdopCache: number; // float
+    private vdopCache: number; // float
+    private systemIdCache: number; // int
 
     constructor(
         talkerId: TalkerId,
@@ -42,45 +39,46 @@ export class MessageGsa extends Message {
     }
 
     get opMode(): string {
-        if (undefined === this.opModeCache) {
-            this.opModeCache = this.fields[0];
-        }
-        return this.opModeCache;
+        return this.fields[0];
     }
     get navMode(): number {
         if (undefined === this.navModeCache) {
-            this.navModeCache = new CacheableInteger(this.fields[1]);
+            this.navModeCache = Number.parseInt(this.fields[1], 10);
         }
-        return this.navModeCache.value;
+        return this.navModeCache;
     }
     get svid(): number[] {
         if (undefined === this.svidCache) {
-            this.svidCache = new CacheableIntegerArray(this.fields.slice(2, 14));
+            this.svidCache = [];
+            for (const element of this.fields.slice(2, 14)) {
+                const num = Number.parseInt(element, 10);
+                this.svidCache.push(num);
+            }
         }
-        return this.svidCache.value;
+        return this.svidCache;
     }
     get pdop(): number {
         if (undefined === this.pdopCache) {
-            this.pdopCache = new CacheableFloat(this.fields[14]);
+            this.pdopCache = Number.parseFloat(this.fields[14]);
         }
-        return this.pdopCache.value;
+        return this.pdopCache;
     }
     get hdop(): number {
         if (undefined === this.hdopCache) {
-            this.hdopCache = new CacheableFloat(this.fields[15]);
+            this.hdopCache = Number.parseFloat(this.fields[15]);
         }
-        return this.hdopCache.value;
+        return this.hdopCache;
     }
     get vdop(): number {
         if (undefined === this.vdopCache) {
-            this.vdopCache = new CacheableFloat(this.fields[16]);
+            this.vdopCache = Number.parseFloat(this.fields[16]);
         }
-        return this.vdopCache.value;
+        return this.vdopCache;
     }
     get systemId(): number {
         if (undefined === this.systemIdCache) {
-            this.systemIdCache = new CacheableInteger(this.fields[17]);
+            this.systemIdCache = Number.parseInt(this.fields[17], 10);
         }
-        return this.systemIdCache.value;
+        return this.systemIdCache;
     }
 }

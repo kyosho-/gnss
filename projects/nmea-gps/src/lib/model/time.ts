@@ -10,24 +10,20 @@ export class Time {
     private ms: number;
 
     static parse(sentence: string): Time {
+        if (undefined === sentence) {
+            throw new Error(`Sentence is undefinced. (sentence=${sentence})`);
+        }
+
         const matched: string[] = sentence.match(Time.TIME_REGEX);
 
-        if (undefined === matched || 5 !== matched.length) {
-            throw new Error(`Parse Error. (value=${sentence})`);
+        if (null === matched || undefined === matched || 5 !== matched.length) {
+            throw new Error(`Parse Error. (sentence=${sentence})`);
         }
 
         const hh = Number.parseInt(matched[1], 10);
         const mm = Number.parseInt(matched[2], 10);
         const sec = Number.parseInt(matched[3], 10);
         const ms = Number.parseInt(matched[4], 10);
-
-        if (!Number.isInteger(hh) ||
-            !Number.isInteger(mm) ||
-            !Number.isInteger(sec) ||
-            !Number.isInteger(ms)) {
-            throw new Error(`Parse Error. (value=${sentence})`);
-        }
-
         return new Time(hh, mm, sec, ms);
     }
 

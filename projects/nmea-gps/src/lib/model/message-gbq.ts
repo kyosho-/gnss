@@ -30,7 +30,5 @@ export class MessageGbq extends Message {
         this.fields = fields;
     }
 
-    get msgId(): string {
-        return this.fields[0];
-    }
+    get msgId(): string { return this.fields[0]; }
 }

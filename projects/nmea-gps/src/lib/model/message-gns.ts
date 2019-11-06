@@ -1,16 +1,11 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
-import { CacheableTime } from '../util/cacheable-time';
-import { CacheableDm } from '../util/cacheable-dm';
-import { CacheableNs } from '../util/cacheable-ns';
-import { CacheableEw } from '../util/cacheable-ew';
-import { CacheableInteger } from '../util/cacheable-integer';
-import { CacheableFloat } from '../util/cacheable-float';
 import { Time } from './time';
 import { Dm } from './dm';
 import { Ns } from './ns.enum';
 import { Ew } from './ew.enum';
+import { mapToEnum } from '../util/map-to-enum';
 
 export class MessageGns extends Message {
     /**
@@ -25,19 +20,19 @@ export class MessageGns extends Message {
 
     private fields: string[];
 
-    private timeCache: CacheableTime;
-    private latCache: CacheableDm;
-    private nsCache: CacheableNs;
-    private lonCache: CacheableDm;
-    private ewCache: CacheableEw;
-    private posModeCache: string;
-    private numSvCache: CacheableInteger;
-    private hdopCache: CacheableFloat;
-    private altCache: CacheableFloat;
-    private sepCache: CacheableFloat;
-    private diffAgeCache: CacheableInteger;
-    private diffStationCache: CacheableInteger;
-    private navStatusCache: string;
+    private timeCache: Time;
+    private latCache: Dm;
+    private nsCache: Ns;
+    private lonCache: Dm;
+    private ewCache: Ew;
+    // private posModeCache: string;
+    private numSvCache: number; // int
+    private hdopCache: number; // float
+    private altCache: number; // float
+    private sepCache: number; // float
+    private diffAgeCache: number; // int
+    private diffStationCache: number; // int
+    // private navStatusCache: string;
 
     constructor(
         talkerId: TalkerId,
@@ -56,80 +51,74 @@ export class MessageGns extends Message {
 
     get time(): Time {
         if (undefined === this.timeCache) {
-            this.timeCache = new CacheableTime(this.fields[0]);
+            this.timeCache = Time.parse(this.fields[0]);
         }
-        return this.timeCache.value;
+        return this.timeCache;
     }
     get lat(): Dm {
         if (undefined === this.latCache) {
-            this.latCache = new CacheableDm(this.fields[2], this.fields[1]);
+            this.latCache = Dm.parse(this.fields[2], this.fields[1]);
         }
-        return this.latCache.value;
+        return this.latCache;
     }
     get ns(): Ns {
         if (undefined === this.nsCache) {
-            this.nsCache = new CacheableNs(this.fields[2]);
+            this.nsCache = mapToEnum(Ns, this.fields[2]);
         }
-        return this.nsCache.value;
+        return this.nsCache;
     }
     get lon(): Dm {
         if (undefined === this.lonCache) {
-            this.lonCache = new CacheableDm(this.fields[4], this.fields[3]);
+            this.lonCache = Dm.parse(this.fields[4], this.fields[3]);
         }
-        return this.lonCache.value;
+        return this.lonCache;
     }
     get ew(): Ew {
         if (undefined === this.ewCache) {
-            this.ewCache = new CacheableEw(this.fields[4]);
+            this.ewCache = mapToEnum(Ew, this.fields[4]);
         }
-        return this.ewCache.value;
+        return this.ewCache;
     }
     get posMode(): string {
-        if (undefined === this.posModeCache) {
-            this.posModeCache = this.fields[5];
-        }
-        return this.posModeCache;
+        return this.fields[5];
     }
     get numSv(): number {
         if (undefined === this.numSvCache) {
-            this.numSvCache = new CacheableInteger(this.fields[6]);
+            this.numSvCache = Number.parseInt(this.fields[6], 10);
         }
-        return this.numSvCache.value;
+        return this.numSvCache;
     }
     get hdop(): number {
         if (undefined === this.hdopCache) {
-            this.hdopCache = new CacheableFloat(this.fields[7]);
+            this.hdopCache = Number.parseFloat(this.fields[7]);
         }
-        return this.hdopCache.value;
+        return this.hdopCache;
     }
     get alt(): number {
         if (undefined === this.altCache) {
-            this.altCache = new CacheableFloat(this.fields[8]);
+            this.altCache = Number.parseFloat(this.fields[8]);
         }
-        return this.altCache.value;
+        return this.altCache;
     }
     get sep(): number {
         if (undefined === this.sepCache) {
-            this.sepCache = new CacheableFloat(this.fields[9]);
+            this.sepCache = Number.parseFloat(this.fields[9]);
         }
-        return this.sepCache.value;
+        return this.sepCache;
     }
     get diffAge(): number {
         if (undefined === this.diffAgeCache) {
-            this.diffAgeCache = new CacheableInteger(this.fields[10]);
+            this.diffAgeCache = Number.parseInt(this.fields[10], 10);
         }
-        return this.diffAgeCache.value;
+        return this.diffAgeCache;
     }
     get diffStation(): number {
         if (undefined === this.diffStationCache) {
-            this.diffStationCache = new CacheableInteger(this.fields[11]);
+            this.diffStationCache = Number.parseInt(this.fields[11], 10);
         }
-        return this.diffStationCache.value;
+        return this.diffStationCache;
     }
     get navStatus(): string {
-        if (undefined === this.navStatusCache) {
-            this.navStatusCache = this.fields[12];
-        }
-        return this.navStatusCache;
+        return this.fields[12];
     }
 }

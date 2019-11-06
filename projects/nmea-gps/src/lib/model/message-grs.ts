@@ -1,10 +1,7 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
-import { CacheableTime } from '../util/cacheable-time';
-import { CacheableInteger } from '../util/cacheable-integer';
 import { Time } from './time';
-import { CacheableFloatArray } from '../util/cacheable-float-array';
 
 export class MessageGrs extends Message {
     /**
@@ -20,11 +17,11 @@ export class MessageGrs extends Message {
 
     private fields: string[];
 
-    private timeCache: CacheableTime;
-    private modeCache: CacheableInteger;
-    private residualCache: CacheableFloatArray;
-    private systemIdCache: CacheableInteger;
-    private signalIdCache: CacheableInteger;
+    private timeCache: Time;
+    private modeCache: number; // int
+    private residualCache: number[]; // float[]
+    private systemIdCache: number; // int
+    private signalIdCache: number; // int
 
     constructor(
         talkerId: TalkerId,
@@ -43,32 +40,36 @@ export class MessageGrs extends Message {
 
     get time(): Time {
         if (undefined === this.timeCache) {
-            this.timeCache = new CacheableTime(this.fields[0]);
+            this.timeCache = Time.parse(this.fields[0]);
         }
-        return this.timeCache.value;
+        return this.timeCache;
     }
     get mode(): number {
         if (undefined === this.modeCache) {
-            this.modeCache = new CacheableInteger(this.fields[1]);
+            this.modeCache = Number.parseInt(this.fields[1], 10);
         }
-        return this.modeCache.value;
+        return this.modeCache;
     }
     get residual(): number[] {
         if (undefined === this.residualCache) {
-            this.residualCache = new CacheableFloatArray(this.fields.slice(2, 14));
+            this.residualCache = [];
+            for (const element of this.fields.slice(2, 14)) {
+                const num = Number.parseFloat(element);
+                this.residualCache.push(num);
+            }
         }
-        return this.residualCache.value;
+        return this.residualCache;
     }
     get systemId(): number {
         if (undefined === this.systemIdCache) {
-            this.systemIdCache = new CacheableInteger(this.fields[14]);
+            this.systemIdCache = Number.parseInt(this.fields[14], 10);
         }
-        return this.systemIdCache.value;
+        return this.systemIdCache;
     }
     get signalId(): number {
         if (undefined === this.signalIdCache) {
-            this.signalIdCache = new CacheableInteger(this.fields[15]);
+            this.signalIdCache = Number.parseInt(this.fields[15], 10);
         }
-        return this.signalIdCache.value;
+        return this.signalIdCache;
     }
 }

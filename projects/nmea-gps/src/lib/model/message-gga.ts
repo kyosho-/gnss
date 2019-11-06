@@ -1,16 +1,11 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
-import { CacheableNs } from '../util/cacheable-ns';
-import { CacheableEw } from '../util/cacheable-ew';
-import { CacheableTime } from '../util/cacheable-time';
-import { CacheableDm } from '../util/cacheable-dm';
-import { CacheableInteger } from '../util/cacheable-integer';
-import { CacheableFloat } from '../util/cacheable-float';
 import { Time } from './time';
 import { Dm } from './dm';
 import { Ns } from './ns.enum';
 import { Ew } from './ew.enum';
+import { mapToEnum } from '../util/map-to-enum';
 
 export class MessageGga extends Message {
     /**
@@ -25,20 +20,20 @@ export class MessageGga extends Message {
 
     private fields: string[];
 
-    private timeCache: CacheableTime;
-    private latCache: CacheableDm;
-    private nsCache: CacheableNs;
-    private lonCache: CacheableDm;
-    private ewCache: CacheableEw;
-    private qualityCache: CacheableInteger;
-    private numSvCache: CacheableInteger;
-    private hdopCache: CacheableFloat;
-    private altCache: CacheableFloat;
-    private altUnitCache: string;
-    private sepCache: CacheableFloat;
-    private sepUnitCache: string;
-    private diffAgeCache: CacheableFloat;
-    private diffStationCache: CacheableFloat;
+    private timeCache: Time;
+    private latCache: Dm;
+    private nsCache: Ns;
+    private lonCache: Dm;
+    private ewCache: Ew;
+    private qualityCache: number; // int
+    private numSvCache: number; // int
+    private hdopCache: number; // float
+    private altCache: number; // float
+    // private altUnitCache: string;
+    private sepCache: number; // float
+    // private sepUnitCache: string;
+    private diffAgeCache: number; // float
+    private diffStationCache: number; // float
 
     constructor(
         talkerId: TalkerId,
@@ -57,86 +52,80 @@ export class MessageGga extends Message {
 
     get time(): Time {
         if (undefined === this.timeCache) {
-            this.timeCache = new CacheableTime(this.fields[0]);
+            this.timeCache = Time.parse(this.fields[0]);
         }
-        return this.timeCache.value;
+        return this.timeCache;
     }
     get lat(): Dm {
         if (undefined === this.latCache) {
-            this.latCache = new CacheableDm(this.fields[2], this.fields[1]);
+            this.latCache = Dm.parse(this.fields[2], this.fields[1]);
         }
-        return this.latCache.value;
+        return this.latCache;
     }
     get ns(): Ns {
         if (undefined === this.nsCache) {
-            this.nsCache = new CacheableNs(this.fields[2]);
+            this.nsCache = mapToEnum(Ns, this.fields[2]);
         }
-        return this.nsCache.value;
+        return this.nsCache;
     }
     get lon(): Dm {
         if (undefined === this.lonCache) {
-            this.lonCache = new CacheableDm(this.fields[4], this.fields[3]);
+            this.lonCache = Dm.parse(this.fields[4], this.fields[3]);
         }
-        return this.lonCache.value;
+        return this.lonCache;
     }
     get ew(): Ew {
         if (undefined === this.ewCache) {
-            this.ewCache = new CacheableEw(this.fields[4]);
+            this.ewCache = mapToEnum(Ew, this.fields[4]);
         }
-        return this.ewCache.value;
+        return this.ewCache;
     }
     get quality(): number {
         if (undefined === this.qualityCache) {
-            this.qualityCache = new CacheableInteger(this.fields[5]);
+            this.qualityCache = Number.parseInt(this.fields[5], 10);
         }
-        return this.qualityCache.value;
+        return this.qualityCache;
     }
     get numSv(): number {
         if (undefined === this.numSvCache) {
-            this.numSvCache = new CacheableInteger(this.fields[6]);
+            this.numSvCache = Number.parseInt(this.fields[6], 10);
         }
-        return this.numSvCache.value;
+        return this.numSvCache;
     }
     get hdop(): number {
         if (undefined === this.hdopCache) {
-            this.hdopCache = new CacheableFloat(this.fields[7]);
+            this.hdopCache = Number.parseFloat(this.fields[7]);
         }
-        return this.hdopCache.value;
+        return this.hdopCache;
     }
     get alt(): number {
         if (undefined === this.altCache) {
-            this.altCache = new CacheableFloat(this.fields[8]);
+            this.altCache = Number.parseFloat(this.fields[8]);
         }
-        return this.altCache.value;
+        return this.altCache;
     }
     get altUnit(): string {
-        if (undefined === this.altUnitCache) {
-            this.altUnitCache = this.fields[9];
-        }
-        return this.altUnitCache;
+        return this.fields[9];
     }
     get sep(): number {
         if (undefined === this.sepCache) {
-            this.sepCache = new CacheableFloat(this.fields[10]);
+            this.sepCache = Number.parseFloat(this.fields[10]);
         }
-        return this.sepCache.value;
+        return this.sepCache;
     }
     get sepUnit(): string {
-        if (undefined === this.sepUnitCache) {
-            this.sepUnitCache = this.fields[11];
-        }
-        return this.sepUnitCache;
+        return this.fields[11];
     }
     get diffAge(): number {
         if (undefined === this.diffAgeCache) {
-            this.diffAgeCache = new CacheableFloat(this.fields[12]);
+            this.diffAgeCache = Number.parseFloat(this.fields[12]);
         }
-        return this.diffAgeCache.value;
+        return this.diffAgeCache;
     }
     get diffStation(): number {
         if (undefined === this.diffStationCache) {
-            this.diffStationCache = new CacheableFloat(this.fields[13]);
+            this.diffStationCache = Number.parseFloat(this.fields[13]);
         }
-        return this.diffStationCache.value;
+        return this.diffStationCache;
     }
 }

@@ -8,7 +8,20 @@ describe('MessageZda', () => {
     const nmea = Nmea.parse(input);
     const summary = NmeaGps.summary(nmea);
     const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    expect(new MessageZda(summary.talkerId, summary.messageId, splitted)).toBeTruthy();
+    const m = new MessageZda(summary.talkerId, summary.messageId, splitted);
+    expect(m).toBeTruthy();
+    expect(m.time).toBeTruthy();
+    expect(m.time).toBeTruthy();
+    expect(m.day).toEqual(16);
+    expect(m.day).toEqual(16);
+    expect(m.month).toEqual(9);
+    expect(m.month).toEqual(9);
+    expect(m.year).toEqual(2002);
+    expect(m.year).toEqual(2002);
+    expect(m.ltzh).toEqual(0);
+    expect(m.ltzh).toEqual(0);
+    expect(m.ltzn).toEqual(0);
+    expect(m.ltzn).toEqual(0);
   });
 
   it('should error on parse method.', () => {

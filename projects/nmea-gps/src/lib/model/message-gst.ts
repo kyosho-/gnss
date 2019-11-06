@@ -1,8 +1,6 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
-import { CacheableTime } from '../util/cacheable-time';
-import { CacheableFloat } from '../util/cacheable-float';
 import { Time } from './time';
 
 export class MessageGst extends Message {
@@ -18,14 +16,14 @@ export class MessageGst extends Message {
 
     private fields: string[];
 
-    private timeCache: CacheableTime;
-    private rangeRmsCache: CacheableFloat;
-    private stdMajorCache: CacheableFloat;
-    private stdMinorCache: CacheableFloat;
-    private orientCache: CacheableFloat;
-    private stdLatCache: CacheableFloat;
-    private stdLongCache: CacheableFloat;
-    private stdAltCache: CacheableFloat;
+    private timeCache: Time;
+    private rangeRmsCache: number; // float
+    private stdMajorCache: number; // float
+    private stdMinorCache: number; // float
+    private orientCache: number; // float
+    private stdLatCache: number; // float
+    private stdLongCache: number; // float
+    private stdAltCache: number; // float
 
     constructor(
         talkerId: TalkerId,
@@ -44,50 +42,50 @@ export class MessageGst extends Message {
 
     get time(): Time {
         if (undefined === this.timeCache) {
-            this.timeCache = new CacheableTime(this.fields[0]);
+            this.timeCache = Time.parse(this.fields[0]);
         }
-        return this.timeCache.value;
+        return this.timeCache;
     }
     get rangeRms(): number {
         if (undefined === this.rangeRmsCache) {
-            this.rangeRmsCache = new CacheableFloat(this.fields[1]);
+            this.rangeRmsCache = Number.parseFloat(this.fields[1]);
         }
-        return this.rangeRmsCache.value;
+        return this.rangeRmsCache;
     }
     get stdMajor(): number {
         if (undefined === this.stdMajorCache) {
-            this.stdMajorCache = new CacheableFloat(this.fields[2]);
+            this.stdMajorCache = Number.parseFloat(this.fields[2]);
         }
-        return this.stdMajorCache.value;
+        return this.stdMajorCache;
     }
     get stdMinor(): number {
         if (undefined === this.stdMinorCache) {
-            this.stdMinorCache = new CacheableFloat(this.fields[3]);
+            this.stdMinorCache = Number.parseFloat(this.fields[3]);
         }
-        return this.stdMinorCache.value;
+        return this.stdMinorCache;
     }
     get orient(): number {
         if (undefined === this.orientCache) {
-            this.orientCache = new CacheableFloat(this.fields[4]);
+            this.orientCache = Number.parseFloat(this.fields[4]);
         }
-        return this.orientCache.value;
+        return this.orientCache;
     }
     get stdLat(): number {
         if (undefined === this.stdLatCache) {
-            this.stdLatCache = new CacheableFloat(this.fields[5]);
+            this.stdLatCache = Number.parseFloat(this.fields[5]);
         }
-        return this.stdLatCache.value;
+        return this.stdLatCache;
     }
     get stdLong(): number {
         if (undefined === this.stdLongCache) {
-            this.stdLongCache = new CacheableFloat(this.fields[6]);
+            this.stdLongCache = Number.parseFloat(this.fields[6]);
         }
-        return this.stdLongCache.value;
+        return this.stdLongCache;
     }
     get stdAlt(): number {
         if (undefined === this.stdAltCache) {
-            this.stdAltCache = new CacheableFloat(this.fields[7]);
+            this.stdAltCache = Number.parseFloat(this.fields[7]);
         }
-        return this.stdAltCache.value;
+        return this.stdAltCache;
     }
 }

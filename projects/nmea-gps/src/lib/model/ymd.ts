@@ -1,4 +1,7 @@
 export class Ymd {
+    /**
+     * ddmmyy
+     */
     static readonly YMD_REGEX: RegExp =
         /^([0-9]{2})([0-9]{2})([0-9]{2})$/;
 
@@ -7,22 +10,19 @@ export class Ymd {
     private dd: number;
 
     static parse(sentence: string): Ymd {
+        if (undefined === sentence) {
+            throw new Error(`Sentence is undefinced. (sentence=${sentence})`);
+        }
+
         const matched: string[] = sentence.match(Ymd.YMD_REGEX);
 
-        if (undefined === matched || 4 !== matched.length) {
-            throw new Error(`Parse Error. (value=${sentence})`);
+        if (null === matched || undefined === matched || 4 !== matched.length) {
+            throw new Error(`Parse Error. (sentence=${sentence})`);
         }
 
-        const yy = Number.parseInt(matched[1], 10);
+        const dd = Number.parseInt(matched[1], 10);
         const mm = Number.parseInt(matched[2], 10);
-        const dd = Number.parseInt(matched[3], 10);
-
-        if (!Number.isInteger(yy) ||
-            !Number.isInteger(mm) ||
-            !Number.isInteger(dd)) {
-            throw new Error(`Parse Error. (value=${sentence})`);
-        }
-
+        const yy = Number.parseInt(matched[3], 10);
         return new Ymd(yy, mm, dd);
     }
 

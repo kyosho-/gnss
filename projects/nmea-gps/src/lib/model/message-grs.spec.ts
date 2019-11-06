@@ -8,7 +8,32 @@ describe('MessageGrs', () => {
     let nmea = Nmea.parse(input);
     let summary = NmeaGps.summary(nmea);
     let splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    expect(new MessageGrs(summary.talkerId, summary.messageId, splitted)).toBeTruthy();
+    let m = new MessageGrs(summary.talkerId, summary.messageId, splitted);
+    expect(m).toBeTruthy();
+    expect(m.time).toBeTruthy();
+    expect(m.time).toBeTruthy();
+    expect(m.mode).toEqual(1);
+    expect(m.mode).toEqual(1);
+
+    expect(m.residual[0]).toEqual(2.6);
+    expect(m.residual[1]).toEqual(2.2);
+    expect(m.residual[2]).toEqual(-1.6);
+    expect(m.residual[3]).toEqual(-1.1);
+    expect(m.residual[4]).toEqual(-1.7);
+    expect(m.residual[5]).toEqual(-1.5);
+    expect(m.residual[6]).toEqual(5.8);
+    expect(m.residual[7]).toEqual(1.7);
+    expect(m.residual[8]).toEqual(NaN);
+    expect(m.residual[9]).toEqual(NaN);
+    expect(m.residual[10]).toEqual(NaN);
+    expect(m.residual[11]).toEqual(NaN);
+
+    expect(m.systemId).toEqual(1);
+    expect(m.systemId).toEqual(1);
+    expect(m.signalId).toEqual(1);
+    expect(m.signalId).toEqual(1);
+
+
     input = '$GNGRS,104148.00,1,,0.0,2.5,0.0,,2.8,,,,,,,1,5*51\r\n';
     nmea = Nmea.parse(input);
     summary = NmeaGps.summary(nmea);

@@ -42,4 +42,13 @@ describe('MapToEnum', () => {
     expect(mid).not.toEqual(midStr);
     expect(mid).toBeUndefined();
   });
+
+  it('should be unsupported operation.', () => {
+    try {
+      const midStr = 'piyo';
+      const mid = mapToEnum(undefined, midStr);
+    } catch (error) {
+      expect(error.message).toEqual(`Unsupported operation.`);
+    }
+  });
 });

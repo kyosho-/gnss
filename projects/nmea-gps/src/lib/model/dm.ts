@@ -7,7 +7,7 @@ export class Dm {
     private m: number;
 
     static parseSign(direction: string): number {
-        if (!direction || 1 !== direction.length) {
+        if (undefined === direction || 1 !== direction.length) {
             throw new Error(`Direction is not valid. (direction=${direction})`);
         }
 
@@ -26,12 +26,12 @@ export class Dm {
     static parse(direction: string, sentence: string): Dm {
         const sign = Dm.parseSign(direction);
 
-        if (!sentence) {
+        if (undefined === sentence) {
             throw new Error(`dms is undefined.`);
         }
 
         const matched: string[] = sentence.match(Dm.DM_REGEX);
-        if (undefined === matched || 3 !== matched.length) {
+        if (undefined === matched || null === matched || 3 !== matched.length) {
             throw new Error(`Parse Error. (value=${sentence})`);
         }
         const d = Number.parseInt(matched[1], 10);

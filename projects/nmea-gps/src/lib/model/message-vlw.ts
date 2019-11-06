@@ -1,7 +1,6 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
-import { CacheableFloat } from '../util/cacheable-float';
 
 export class MessageVlw extends Message {
     /**
@@ -16,14 +15,14 @@ export class MessageVlw extends Message {
 
     private fields: string[];
 
-    private twdCache: CacheableFloat;
-    private twdUnitCache: string;
-    private wdCache: CacheableFloat;
-    private wdUnitCache: string;
-    private tgdCache: CacheableFloat;
-    private tgdUnitCache: string;
-    private gdCache: CacheableFloat;
-    private gdUnitCache: string;
+    private twdCache: number; // float
+    // private twdUnitCache: string;
+    private wdCache: number; // float
+    // private wdUnitCache: string;
+    private tgdCache: number; // float
+    // private tgdUnitCache: string;
+    private gdCache: number; // float
+    // private gdUnitCache: string;
 
     constructor(
         talkerId: TalkerId,
@@ -41,50 +40,38 @@ export class MessageVlw extends Message {
 
     get twd(): number {
         if (undefined === this.twdCache) {
-            this.twdCache = new CacheableFloat(this.fields[0]);
+            this.twdCache = Number.parseFloat(this.fields[0]);
         }
-        return this.twdCache.value;
+        return this.twdCache;
     }
-    get tweUnit(): string {
-        if (undefined === this.twdUnitCache) {
-            this.twdUnitCache = this.fields[1];
-        }
-        return this.twdUnitCache;
+    get twdUnit(): string {
+        return this.fields[1];
     }
     get wd(): number {
         if (undefined === this.wdCache) {
-            this.wdCache = new CacheableFloat(this.fields[2]);
+            this.wdCache = Number.parseFloat(this.fields[2]);
         }
-        return this.wdCache.value;
+        return this.wdCache;
     }
     get wdUnit(): string {
-        if (undefined === this.wdUnitCache) {
-            this.wdUnitCache = this.fields[3];
-        }
-        return this.wdUnitCache;
+        return this.fields[3];
     }
     get tgd(): number {
         if (undefined === this.tgdCache) {
-            this.tgdCache = new CacheableFloat(this.fields[4]);
+            this.tgdCache = Number.parseFloat(this.fields[4]);
         }
-        return this.tgdCache.value;
+        return this.tgdCache;
     }
     get tgdUnit(): string {
-        if (undefined === this.tgdUnitCache) {
-            this.tgdUnitCache = this.fields[5];
-        }
-        return this.tgdUnitCache;
+        return this.fields[5];
     }
     get gd(): number {
         if (undefined === this.gdCache) {
-            this.gdCache = new CacheableFloat(this.fields[6]);
+            this.gdCache = Number.parseFloat(this.fields[6]);
         }
-        return this.gdCache.value;
+        return this.gdCache;
     }
     get gdUnit(): string {
-        if (undefined === this.gdUnitCache) {
-            this.gdUnitCache = this.fields[7];
-        }
-        return this.gdUnitCache;
+        return this.fields[7];
     }
 }
