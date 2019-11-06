@@ -2,6 +2,7 @@ import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Satellite } from './satellite';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageGsv extends Message {
     /**
@@ -9,7 +10,6 @@ export class MessageGsv extends Message {
      */
     static readonly ID = MessageId.GSV;
 
-    private fields: string[];
     private hasSignalId: boolean;
     private svNum: number;
 
@@ -23,18 +23,15 @@ export class MessageGsv extends Message {
      */
     private signalIdCache: number; // int
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields) {
+        if (undefined === this.fields) {
             throw new Error(`fields is undefined.`);
         }
 
-        const size = fields.length;
+        const size = this.fields.length;
         const remaining = (size - 3) % 4;
         this.hasSignalId = remaining === 1;
         this.svNum = Math.floor((size - 3) / 4);
@@ -42,11 +39,8 @@ export class MessageGsv extends Message {
         if (!(remaining === 0 || remaining === 1) ||
             this.svNum < 0 || this.svNum > 4) {
             throw new Error(
-                `Parse Error. (talkerId=${talkerId}, messageId=${messageId}, fields=${JSON.stringify(fields)})`);
+                `Parse Error. (talkerId=${this.talkerId}, messageId=${this.messageId}, fields=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get numMsg(): number {

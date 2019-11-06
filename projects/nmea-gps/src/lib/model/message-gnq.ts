@@ -1,6 +1,6 @@
 import { Message } from './message';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageGnq extends Message {
     /**
@@ -13,21 +13,14 @@ export class MessageGnq extends Message {
      */
     static readonly FIELD_NUM = 1;
 
-    private fields: string[];
-
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageGnq.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageGnq.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get msgId(): string { return this.fields[0]; }

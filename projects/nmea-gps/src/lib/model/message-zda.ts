@@ -2,6 +2,7 @@ import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Time } from './time';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageZda extends Message {
     /**
@@ -14,8 +15,6 @@ export class MessageZda extends Message {
      */
     static readonly FIELD_NUM = 6;
 
-    private fields: string[];
-
     private timeCache: Time;
     private dayCache: number; // int
     private monthCache: number; // int
@@ -23,19 +22,14 @@ export class MessageZda extends Message {
     private ltzhCache: number; // int
     private ltznCache: number; // int
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageZda.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageZda.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get time(): Time {

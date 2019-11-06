@@ -1,14 +1,11 @@
 import { MessageVlw } from './message-vlw';
-import { Nmea } from '@kyosho-/nmea';
 import { NmeaGps } from '../nmea-gps';
 
 describe('MessageVlw', () => {
   it('should create an instance', () => {
     const input = '$GPVLW,,N,,N,15.8,N,1.2,N*65\r\n';
-    const nmea = Nmea.parse(input);
-    const summary = NmeaGps.summary(nmea);
-    const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    const m = new MessageVlw(summary.talkerId, summary.messageId, splitted);
+    const nmea = new NmeaGps(input);
+    const m = new MessageVlw(nmea);
     expect(m).toBeTruthy();
     expect(m.twd).toEqual(NaN);
     expect(m.twd).toEqual(NaN);
@@ -30,12 +27,11 @@ describe('MessageVlw', () => {
 
   it('should error on parse method.', () => {
     const input = '$GPVLW,,N,,N,15.8,N,1.2,N*65\r\n';
-    const nmea = Nmea.parse(input);
-    const summary = NmeaGps.summary(nmea);
-    const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
+    const nmea = new NmeaGps(input);
 
     try {
-      const message = new MessageVlw(summary.talkerId, summary.messageId, ['', '']);
+      // const message = new MessageVlw(summary.talkerId, summary.messageId, ['', '']);
+      const message = new MessageVlw(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

@@ -1,11 +1,11 @@
 import { Message } from './message';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Time } from './time';
 import { Dm } from './dm';
 import { Ns } from './ns.enum';
 import { Ew } from './ew.enum';
 import { mapToEnum } from '../util/map-to-enum';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageGns extends Message {
     /**
@@ -17,8 +17,6 @@ export class MessageGns extends Message {
      * Field parameter number.
      */
     static readonly FIELD_NUM = 13;
-
-    private fields: string[];
 
     private timeCache: Time;
     private latCache: Dm;
@@ -34,19 +32,14 @@ export class MessageGns extends Message {
     private diffStationCache: number; // int
     // private navStatusCache: string;
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageGns.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageGns.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get time(): Time {

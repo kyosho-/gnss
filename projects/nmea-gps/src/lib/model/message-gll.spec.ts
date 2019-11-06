@@ -1,4 +1,3 @@
-import { Nmea } from '@kyosho-/nmea';
 import { MessageGll } from './message-gll';
 import { NmeaGps } from '../nmea-gps';
 import { Ns } from './ns.enum';
@@ -7,10 +6,8 @@ import { Ew } from './ew.enum';
 describe('MessageGll', () => {
   it('should create an instance', () => {
     const input = '$GPGLL,4717.11364,N,00833.91565,E,092321.00,A,A*60\r\n';
-    const nmea = Nmea.parse(input);
-    const summary = NmeaGps.summary(nmea);
-    const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    const m = new MessageGll(summary.talkerId, summary.messageId, splitted);
+    const nmea = new NmeaGps(input);
+    const m = new MessageGll(nmea);
     expect(m).toBeTruthy();
     expect(m.lat).toBeTruthy();
     expect(m.lat).toBeTruthy();
@@ -30,12 +27,11 @@ describe('MessageGll', () => {
 
   it('should error on parse method.', () => {
     const input = '$GPGLL,4717.11364,N,00833.91565,E,092321.00,A,A*60\r\n';
-    const nmea = Nmea.parse(input);
-    const summary = NmeaGps.summary(nmea);
-    const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
+    const nmea = new NmeaGps(input);
 
     try {
-      const message = new MessageGll(summary.talkerId, summary.messageId, ['', '']);
+      // const message = new MessageGll(summary.talkerId, summary.messageId, ['', '']);
+      const message = new MessageGll(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

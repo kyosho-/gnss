@@ -1,6 +1,7 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageVlw extends Message {
     /**
@@ -13,8 +14,6 @@ export class MessageVlw extends Message {
      */
     static readonly FIELD_NUM = 8;
 
-    private fields: string[];
-
     private twdCache: number; // float
     // private twdUnitCache: string;
     private wdCache: number; // float
@@ -24,18 +23,14 @@ export class MessageVlw extends Message {
     private gdCache: number; // float
     // private gdUnitCache: string;
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageVlw.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageVlw.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-        // save
-        this.fields = fields;
     }
 
     get twd(): number {

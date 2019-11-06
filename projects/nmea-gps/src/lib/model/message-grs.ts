@@ -2,6 +2,7 @@ import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Time } from './time';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageGrs extends Message {
     /**
@@ -15,27 +16,20 @@ export class MessageGrs extends Message {
     static readonly FIELD_NUM = 16;
     static readonly RESIDUAL_NUM = 12;
 
-    private fields: string[];
-
     private timeCache: Time;
     private modeCache: number; // int
     private residualCache: number[]; // float[]
     private systemIdCache: number; // int
     private signalIdCache: number; // int
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageGrs.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageGrs.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get time(): Time {

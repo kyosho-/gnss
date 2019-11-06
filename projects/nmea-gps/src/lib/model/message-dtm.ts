@@ -1,10 +1,10 @@
 import { Message } from './message';
 import { Datum } from './datum.enum';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Ns } from './ns.enum';
 import { Ew } from './ew.enum';
 import { mapToEnum } from '../util/map-to-enum';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageDtm extends Message {
     /**
@@ -17,8 +17,6 @@ export class MessageDtm extends Message {
      */
     static readonly FIELD_NUM = 8;
 
-    private fields: string[];
-
     private datumCache: Datum;
     // private subDatumCache: string;
     private latCache: number; // float
@@ -28,19 +26,14 @@ export class MessageDtm extends Message {
     private altCache: number; // float
     private refDatumCache: Datum;
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageDtm.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageDtm.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get datum(): Datum {

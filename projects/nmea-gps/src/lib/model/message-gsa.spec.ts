@@ -1,14 +1,11 @@
 import { MessageGsa } from './message-gsa';
-import { Nmea } from '@kyosho-/nmea';
 import { NmeaGps } from '../nmea-gps';
 
 describe('MessageGsa', () => {
   it('should create an instance', () => {
     const input = '$GPGSA,A,3,23,29,07,08,09,18,26,28,,,,,1.94,1.18,1.54,1*10\r\n';
-    const nmea = Nmea.parse(input);
-    const summary = NmeaGps.summary(nmea);
-    const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    const m = new MessageGsa(summary.talkerId, summary.messageId, splitted);
+    const nmea = new NmeaGps(input);
+    const m = new MessageGsa(nmea);
     expect(m).toBeTruthy();
     expect(m.opMode).toEqual('A');
     expect(m.opMode).toEqual('A');
@@ -38,12 +35,11 @@ describe('MessageGsa', () => {
 
   it('should error on parse method.', () => {
     const input = '$GPGSA,A,3,23,29,07,08,09,18,26,28,,,,,1.94,1.18,1.54,1*10\r\n';
-    const nmea = Nmea.parse(input);
-    const summary = NmeaGps.summary(nmea);
-    const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
+    const nmea = new NmeaGps(input);
 
     try {
-      const message = new MessageGsa(summary.talkerId, summary.messageId, ['', '']);
+      // const message = new MessageGsa(summary.talkerId, summary.messageId, ['', '']);
+      const message = new MessageGsa(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

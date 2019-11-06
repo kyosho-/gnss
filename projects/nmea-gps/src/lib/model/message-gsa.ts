@@ -1,6 +1,6 @@
 import { Message } from './message';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageGsa extends Message {
     /**
@@ -13,8 +13,6 @@ export class MessageGsa extends Message {
      */
     static readonly FIELD_NUM = 18;
 
-    private fields: string[];
-
     // private opModeCache: string;
     private navModeCache: number; // int
     private svidCache: number[]; // int
@@ -23,19 +21,14 @@ export class MessageGsa extends Message {
     private vdopCache: number; // float
     private systemIdCache: number; // int
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageGsa.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageGsa.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get opMode(): string {

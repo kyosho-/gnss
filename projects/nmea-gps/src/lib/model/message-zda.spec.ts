@@ -5,10 +5,8 @@ import { NmeaGps } from '../nmea-gps';
 describe('MessageZda', () => {
   it('should create an instance', () => {
     const input = '$GPZDA,082710.00,16,09,2002,00,00*64\r\n';
-    const nmea = Nmea.parse(input);
-    const summary = NmeaGps.summary(nmea);
-    const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    const m = new MessageZda(summary.talkerId, summary.messageId, splitted);
+    const nmea = new NmeaGps(input);
+    const m = new MessageZda(nmea);
     expect(m).toBeTruthy();
     expect(m.time).toBeTruthy();
     expect(m.time).toBeTruthy();
@@ -26,12 +24,11 @@ describe('MessageZda', () => {
 
   it('should error on parse method.', () => {
     const input = '$GPZDA,082710.00,16,09,2002,00,00*64\r\n';
-    const nmea = Nmea.parse(input);
-    const summary = NmeaGps.summary(nmea);
-    const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
+    const nmea = new NmeaGps(input);
 
     try {
-      const message = new MessageZda(summary.talkerId, summary.messageId, ['', '']);
+      // const message = new MessageZda(summary.talkerId, summary.messageId, ['', '']);
+      const message = new MessageZda(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

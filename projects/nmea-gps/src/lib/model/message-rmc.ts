@@ -7,6 +7,7 @@ import { Ns } from './ns.enum';
 import { Ew } from './ew.enum';
 import { Ymd } from './ymd';
 import { mapToEnum } from '../util/map-to-enum';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageRmc extends Message {
     /**
@@ -19,8 +20,6 @@ export class MessageRmc extends Message {
      */
     static readonly FIELD_NUM = 12;
     static readonly FIELD_NUM_410 = 13;
-
-    private fields: string[];
 
     private timeCache: Time;
     // private statusCache: string;
@@ -36,19 +35,15 @@ export class MessageRmc extends Message {
     // private posModeCache: string;
     // private navStatusCache: string;
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || (fields.length !== MessageRmc.FIELD_NUM && fields.length !== MessageRmc.FIELD_NUM_410)) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            (this.fields.length !== MessageRmc.FIELD_NUM &&
+                this.fields.length !== MessageRmc.FIELD_NUM_410)) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get time(): Time {

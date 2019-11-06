@@ -1,6 +1,7 @@
 import { Message } from './message';
 import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageTxt extends Message {
     /**
@@ -13,26 +14,19 @@ export class MessageTxt extends Message {
      */
     static readonly FIELD_NUM = 4;
 
-    private fields: string[];
-
     private numMsgCache: number; // int
     private msgNumCache: number; // int
     private msgTypeCache: number; // int
     // private textCache: string;
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageTxt.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageTxt.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get numMsg(): number {

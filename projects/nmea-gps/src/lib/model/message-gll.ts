@@ -6,6 +6,7 @@ import { Dm } from './dm';
 import { Ew } from './ew.enum';
 import { Time } from './time';
 import { mapToEnum } from '../util/map-to-enum';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageGll extends Message {
     /**
@@ -18,8 +19,6 @@ export class MessageGll extends Message {
      */
     static readonly FIELD_NUM = 7;
 
-    private fields: string[];
-
     private latCache: Dm;
     private nsCache: Ns;
     private lonCache: Dm;
@@ -28,19 +27,14 @@ export class MessageGll extends Message {
     // private statusCache: string;
     // private posModeCache: string;
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageGll.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageGll.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get lat(): Dm {

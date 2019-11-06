@@ -1,7 +1,7 @@
 import { Message } from './message';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Time } from './time';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageGst extends Message {
     /**
@@ -14,8 +14,6 @@ export class MessageGst extends Message {
      */
     static readonly FIELD_NUM = 8;
 
-    private fields: string[];
-
     private timeCache: Time;
     private rangeRmsCache: number; // float
     private stdMajorCache: number; // float
@@ -25,19 +23,14 @@ export class MessageGst extends Message {
     private stdLongCache: number; // float
     private stdAltCache: number; // float
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageGst.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageGst.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get time(): Time {

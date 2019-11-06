@@ -1,6 +1,6 @@
 import { Message } from './message';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
+import { NmeaGps } from '../nmea-gps';
 
 export class MessageVtg extends Message {
     /**
@@ -13,8 +13,6 @@ export class MessageVtg extends Message {
      */
     static readonly FIELD_NUM = 9;
 
-    private fields: string[];
-
     private cogtCache: number; // float
     // private cogtUnitCache: string;
     private cogmCache: number; // float
@@ -25,19 +23,14 @@ export class MessageVtg extends Message {
     // private sogkUnitCache: string;
     // private posModeCache: string;
 
-    constructor(
-        talkerId: TalkerId,
-        messageId: MessageId,
-        fields: string[]) {
-        super(talkerId, messageId);
+    constructor(nmea: NmeaGps) {
+        super(nmea);
 
         // validation
-        if (undefined === fields || fields.length !== MessageVtg.FIELD_NUM) {
-            throw new Error(`Parse Error. (message=${fields})`);
+        if (undefined === this.fields ||
+            this.fields.length !== MessageVtg.FIELD_NUM) {
+            throw new Error(`Parse Error. (message=${this.value})`);
         }
-
-        // save
-        this.fields = fields;
     }
 
     get cogt(): number {

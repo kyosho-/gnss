@@ -8,7 +8,7 @@ describe('Nmea', () => {
     messages.push('!AIVDM,2,2,3,B,1@0000000000000,2*55');
 
     for (const message of messages) {
-      const nmea: Nmea = Nmea.parse(message);
+      const nmea: Nmea = new Nmea(message);
       expect(nmea).toBeTruthy(message);
     }
   });
@@ -19,10 +19,10 @@ describe('Nmea', () => {
 
     for (const message of messages) {
       try {
-        const nmea: Nmea = Nmea.parse(message);
+        const nmea: Nmea = new Nmea(message);
         fail('到達しない');
       } catch (e) {
-        expect(e.message).toEqual(`Checksum is not match. (input=${message})`);
+        expect(e.message).toEqual(`Checksum is not match. (line=${message})`);
       }
     }
   });
@@ -87,7 +87,7 @@ describe('Nmea', () => {
     messages.push('$GNTXT,01,01,02,u-blox AG - www.u-blox.com*4E\r\n');
 
     for (const message of messages) {
-      const nmea: Nmea = Nmea.parse(message);
+      const nmea: Nmea = new Nmea(message);
       // expect(nmea.getTalkerId()).toEqual('GN');
       // expect(nmea.getMessageId()).toEqual('TXT');
       expect(nmea.getAddress()).toEqual('GNTXT');
@@ -109,7 +109,7 @@ describe('Nmea', () => {
     messages.push('$GNTXT,01,01,02,u-blox AG - www.u-blox.com*4E\r\n');
 
     for (const message of messages) {
-      const nmea: Nmea = Nmea.parse(message);
+      const nmea: Nmea = new Nmea(message);
       // expect(nmea.getTalkerId()).toEqual('GN');
       // expect(nmea.getMessageId()).toEqual('TXT');
       expect(nmea.getAddress()).toEqual('GNTXT');

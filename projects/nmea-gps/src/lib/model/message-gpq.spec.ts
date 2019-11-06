@@ -1,26 +1,22 @@
 import { MessageGpq } from './message-gpq';
-import { Nmea } from '@kyosho-/nmea';
 import { NmeaGps } from '../nmea-gps';
 
 describe('MessageGpq', () => {
   it('should create an instance', () => {
     const input = '$GPGPQ,RMC*21\r\n';
-    const nmea = Nmea.parse(input);
-    const summary = NmeaGps.summary(nmea);
-    const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
-    const m = new MessageGpq(summary.talkerId, summary.messageId, splitted);
+    const nmea = new NmeaGps(input);
+    const m = new MessageGpq(nmea);
     expect(m).toBeTruthy();
     expect(m.msgId).toEqual('RMC');
   });
 
   it('should error on parse method.', () => {
     const input = '$GPGPQ,RMC*21\r\n';
-    const nmea = Nmea.parse(input);
-    const summary = NmeaGps.summary(nmea);
-    const splitted = nmea.getValue().split(NmeaGps.FIELD_DELIMITER);
+    const nmea = new NmeaGps(input);
 
     try {
-      const message = new MessageGpq(summary.talkerId, summary.messageId, ['', '']);
+      // const message = new MessageGpq(summary.talkerId, summary.messageId, ['', '']);
+      const m = new MessageGpq(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

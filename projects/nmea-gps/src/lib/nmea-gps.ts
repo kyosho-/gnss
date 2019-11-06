@@ -3,110 +3,58 @@ import { Nmea } from '@kyosho-/nmea';
 import { mapToEnum } from './util/map-to-enum';
 import { TalkerId } from './model/talker-id.enum';
 import { MessageId } from './model/message-id.enum';
-import { Message } from './model/message';
-import { MessageSummary } from './model/message-summary';
 
 /**
  * NMEA Base Sentence
  */
-export abstract class NmeaGps extends Nmea {
-    public static readonly ADDRESS_LENGTH = 5;
-    public static readonly TALKER_ID_LENGTH = 2;
-    public static readonly MESSAGE_ID_LENGTH = 3;
+export class NmeaGps extends Nmea {
+
+    static readonly ADDRESS_REGEX: RegExp =
+        /^([A-Z]{2})([A-Z]{3})$/;
+
+    static readonly ADDRESS_LENGTH = 5;
+
     /**
      * Field delimiter
      */
-    public static readonly FIELD_DELIMITER: string = ',';
+    static readonly FIELD_DELIMITER: string = ',';
 
-    protected talkerId: TalkerId;
+    protected talkerIdInternal: TalkerId;
 
-    protected messageId: MessageId;
-
-    /**
-     * Message
-     */
-    private message: Message;
-
-    static summary(nmea: Nmea): MessageSummary {
-        const address = nmea.getAddress();
-        if (address.length !== NmeaGps.ADDRESS_LENGTH) {
-            return { isStandard: false };
-        }
-
-        let substr = address.substr(
-            0,
-            NmeaGps.TALKER_ID_LENGTH);
-        const tid = mapToEnum(TalkerId, substr);
-
-        substr = address.substr(
-            NmeaGps.TALKER_ID_LENGTH,
-            NmeaGps.MESSAGE_ID_LENGTH);
-        const mid = mapToEnum(MessageId, substr);
-
-        return {
-            isStandard: tid !== undefined && mid !== undefined,
-            talkerId: tid,
-            messageId: mid
-        } as MessageSummary;
-    }
+    protected messageIdInternal: MessageId;
 
     /**
      * Constructor.
-     * @param input NMEA Line string or data.
+     * @param line NMEA Line string or data.
      */
-    constructor(input: Nmea) {
-        super();
-
-        // validate
-        const result = NmeaGps.summary(input);
-        this.validate(input, result);
-
-        // assign
-        this.address = input.getAddress();
-        this.value = input.getValue();
-        this.talkerId = result.talkerId;
-        this.messageId = result.messageId;
-
-        // parse
-        this.message = this.parse(this.talkerId, this.messageId, this.value);
+    constructor(line: string) {
+        super(line);
+        this.initialize();
     }
 
-    /**
-     * parse data
-     * @param tid talker ID
-     * @param mid message ID
-     * @param value value
-     */
-    abstract parse(tid: TalkerId, mid: MessageId, value: string): Message;
-    // カンマ区切りを分割するだけならば、パーサを一つにまとめられると思う。
-    // TODO: 1つにまとめる方向で検討する。
-
-    validate(input: Nmea, result: MessageSummary) {
-        if (!result.isStandard) {
-            throw new Error(`Input data is not standard NMEA format.(input=${input})`);
+    private initialize(): void {
+        if (undefined === this.address || this.address.length !== NmeaGps.ADDRESS_LENGTH) {
+            throw new Error(`Address is invalid. (address=${this.address})`);
         }
 
-        if (!result.talkerId) {
-            throw new Error(`Talker ID is undefined.(talkerId=${result.talkerId})`);
+        const matched: string[] = this.address.match(NmeaGps.ADDRESS_REGEX);
+        if (null === matched || undefined === matched || 3 !== matched.length) {
+            throw new Error(`Parse error. (address=${this.address})`);
         }
 
-        if (!result.messageId) {
-            throw new Error(`Message ID is undefined.(messageId=${result.messageId})`);
-        }
+        this.talkerIdInternal = mapToEnum(TalkerId, matched[1]);
+        this.messageIdInternal = mapToEnum(MessageId, matched[2]);
     }
 
-    getTalkerId(): TalkerId {
-        return this.talkerId;
+    get talkerId(): TalkerId {
+        return this.talkerIdInternal;
     }
 
-    getMessageId(): MessageId {
-        return this.messageId;
+    get messageId(): MessageId {
+        return this.messageIdInternal;
     }
 
-    /**
-     * get Message.
-     */
-    getMessage(): Message {
-        return this.message;
+    get splitted(): string[] {
+        return this.getValue().split(NmeaGps.FIELD_DELIMITER);
     }
 }
