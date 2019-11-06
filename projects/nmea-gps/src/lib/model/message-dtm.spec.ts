@@ -1,4 +1,3 @@
-import { Nmea } from '@kyosho-/nmea';
 import { MessageDtm } from './message-dtm';
 import { NmeaGps } from '../nmea-gps';
 import { Datum } from './datum.enum';

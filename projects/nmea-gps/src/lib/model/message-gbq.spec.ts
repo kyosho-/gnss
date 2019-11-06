@@ -1,4 +1,3 @@
-import { Nmea } from '@kyosho-/nmea';
 import { MessageGbq } from './message-gbq';
 import { NmeaGps } from '../nmea-gps';
 

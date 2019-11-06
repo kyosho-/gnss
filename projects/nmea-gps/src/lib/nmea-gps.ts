@@ -9,9 +9,15 @@ import { MessageId } from './model/message-id.enum';
  */
 export class NmeaGps extends Nmea {
 
+    /**
+     * 
+     */
     static readonly ADDRESS_REGEX: RegExp =
         /^([A-Z]{2})([A-Z]{3})$/;
 
+    /**
+     * 
+     */
     static readonly ADDRESS_LENGTH = 5;
 
     /**
@@ -19,8 +25,14 @@ export class NmeaGps extends Nmea {
      */
     static readonly FIELD_DELIMITER: string = ',';
 
+    /**
+     * 
+     */
     protected talkerIdInternal: TalkerId;
 
+    /**
+     * 
+     */
     protected messageIdInternal: MessageId;
 
     /**
@@ -32,8 +44,12 @@ export class NmeaGps extends Nmea {
         this.initialize();
     }
 
+    /**
+     * 
+     */
     private initialize(): void {
-        if (undefined === this.address || this.address.length !== NmeaGps.ADDRESS_LENGTH) {
+        if (undefined === this.address ||
+            this.address.length !== NmeaGps.ADDRESS_LENGTH) {
             throw new Error(`Address is invalid. (address=${this.address})`);
         }
 
@@ -46,14 +62,23 @@ export class NmeaGps extends Nmea {
         this.messageIdInternal = mapToEnum(MessageId, matched[2]);
     }
 
+    /**
+     * 
+     */
     get talkerId(): TalkerId {
         return this.talkerIdInternal;
     }
 
+    /**
+     * 
+     */
     get messageId(): MessageId {
         return this.messageIdInternal;
     }
 
+    /**
+     * 
+     */
     get splitted(): string[] {
         return this.getValue().split(NmeaGps.FIELD_DELIMITER);
     }
