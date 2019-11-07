@@ -39,42 +39,49 @@ export class MessageGst extends Message {
         }
         return this.timeCache;
     }
+
     get rangeRms(): number {
         if (undefined === this.rangeRmsCache) {
             this.rangeRmsCache = Number.parseFloat(this.fields[1]);
         }
         return this.rangeRmsCache;
     }
+
     get stdMajor(): number {
         if (undefined === this.stdMajorCache) {
             this.stdMajorCache = Number.parseFloat(this.fields[2]);
         }
         return this.stdMajorCache;
     }
+
     get stdMinor(): number {
         if (undefined === this.stdMinorCache) {
             this.stdMinorCache = Number.parseFloat(this.fields[3]);
         }
         return this.stdMinorCache;
     }
+
     get orient(): number {
         if (undefined === this.orientCache) {
             this.orientCache = Number.parseFloat(this.fields[4]);
         }
         return this.orientCache;
     }
+
     get stdLat(): number {
         if (undefined === this.stdLatCache) {
             this.stdLatCache = Number.parseFloat(this.fields[5]);
         }
         return this.stdLatCache;
     }
+
     get stdLong(): number {
         if (undefined === this.stdLongCache) {
             this.stdLongCache = Number.parseFloat(this.fields[6]);
         }
         return this.stdLongCache;
     }
+
     get stdAlt(): number {
         if (undefined === this.stdAltCache) {
             this.stdAltCache = Number.parseFloat(this.fields[7]);

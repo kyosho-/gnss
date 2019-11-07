@@ -1,4 +1,4 @@
-import { NmeaGps } from "./nmea-gps";
+import { NmeaGps } from './nmea-gps';
 import { TalkerId, MessageId } from './model';
 
 describe('NmeaGps', () => {

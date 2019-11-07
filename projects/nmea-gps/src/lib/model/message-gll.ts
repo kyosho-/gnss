@@ -1,5 +1,4 @@
 import { Message } from './message';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Ns } from './ns.enum';
 import { Dm } from './dm';
@@ -43,33 +42,39 @@ export class MessageGll extends Message {
         }
         return this.latCache;
     }
+
     get ns(): Ns {
         if (undefined === this.nsCache) {
             this.nsCache = mapToEnum(Ns, this.fields[1]);
         }
         return this.nsCache;
     }
+
     get lon(): Dm {
         if (undefined === this.lonCache) {
             this.lonCache = Dm.parse(this.fields[3], this.fields[2]);
         }
         return this.lonCache;
     }
+
     get ew(): Ew {
         if (undefined === this.ewCache) {
             this.ewCache = mapToEnum(Ew, this.fields[3]);
         }
         return this.ewCache;
     }
+
     get time(): Time {
         if (undefined === this.timeCache) {
             this.timeCache = Time.parse(this.fields[4]);
         }
         return this.timeCache;
     }
+
     get status(): string {
         return this.fields[5];
     }
+
     get posMode(): string {
         return this.fields[6];
     }

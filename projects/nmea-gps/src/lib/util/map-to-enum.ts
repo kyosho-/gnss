@@ -6,7 +6,6 @@ export function mapToEnum<T>(enumObject: T, value: any): T[keyof T] | undefined 
             }
         }
         // } else if (enumObject instanceof Array) {
-        //     // TIPS: Unit Test は到達できない
         //     return enumObject.find(value);
     } else {
         throw new Error(`Unsupported operation.`);

@@ -1,5 +1,4 @@
 import { Message } from './message';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Time } from './time';
 import { Dm } from './dm';
@@ -52,63 +51,75 @@ export class MessageRmc extends Message {
         }
         return this.timeCache;
     }
+
     get status(): string {
         return this.fields[1];
     }
+
     get lat(): Dm {
         if (undefined === this.latCache) {
             this.latCache = Dm.parse(this.fields[3], this.fields[2]);
         }
         return this.latCache;
     }
+
     get ns(): Ns {
         if (undefined === this.nsCache) {
             this.nsCache = mapToEnum(Ns, this.fields[3]);
         }
         return this.nsCache;
     }
+
     get lon(): Dm {
         if (undefined === this.lonCache) {
             this.lonCache = Dm.parse(this.fields[5], this.fields[4]);
         }
         return this.lonCache;
     }
+
     get ew(): Ew {
         if (undefined === this.ewCache) {
             this.ewCache = mapToEnum(Ew, this.fields[5]);
         }
         return this.ewCache;
     }
+
     get spd(): number {
         if (undefined === this.spdCache) {
             this.spdCache = Number.parseFloat(this.fields[6]);
         }
         return this.spdCache;
     }
+
     get cog(): number {
         if (undefined === this.cogCache) {
             this.cogCache = Number.parseFloat(this.fields[7]);
         }
         return this.cogCache;
     }
+
     get date(): Ymd {
         if (undefined === this.dateCache) {
             this.dateCache = Ymd.parse(this.fields[8]);
         }
         return this.dateCache;
     }
+
     get mv(): number {
         if (undefined === this.mvCache) {
             this.mvCache = Number.parseFloat(this.fields[9]);
         }
         return this.mvCache;
     }
+
     get mvEw(): string {
         return this.fields[10];
     }
+
     get posMode(): string {
         return this.fields[11];
     }
+
     get navStatus(): string {
         return this.fields.length === MessageRmc.FIELD_NUM_410 ?
             this.fields[12] : undefined;

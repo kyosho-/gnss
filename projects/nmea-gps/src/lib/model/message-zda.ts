@@ -1,5 +1,4 @@
 import { Message } from './message';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Time } from './time';
 import { NmeaGps } from '../nmea-gps';
@@ -38,30 +37,35 @@ export class MessageZda extends Message {
         }
         return this.timeCache;
     }
+
     get day(): number {
         if (undefined === this.dayCache) {
             this.dayCache = Number.parseInt(this.fields[1], 10);
         }
         return this.dayCache;
     }
+
     get month(): number {
         if (undefined === this.monthCache) {
             this.monthCache = Number.parseInt(this.fields[2], 10);
         }
         return this.monthCache;
     }
+
     get year(): number {
         if (undefined === this.yearCache) {
             this.yearCache = Number.parseInt(this.fields[3], 10);
         }
         return this.yearCache;
     }
+
     get ltzh(): number {
         if (undefined === this.ltzhCache) {
             this.ltzhCache = Number.parseInt(this.fields[4], 10);
         }
         return this.ltzhCache;
     }
+
     get ltzn(): number {
         if (undefined === this.ltznCache) {
             this.ltznCache = Number.parseInt(this.fields[5], 10);

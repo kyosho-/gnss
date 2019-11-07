@@ -49,72 +49,85 @@ export class MessageGga extends Message {
         }
         return this.timeCache;
     }
+
     get lat(): Dm {
         if (undefined === this.latCache) {
             this.latCache = Dm.parse(this.fields[2], this.fields[1]);
         }
         return this.latCache;
     }
+
     get ns(): Ns {
         if (undefined === this.nsCache) {
             this.nsCache = mapToEnum(Ns, this.fields[2]);
         }
         return this.nsCache;
     }
+
     get lon(): Dm {
         if (undefined === this.lonCache) {
             this.lonCache = Dm.parse(this.fields[4], this.fields[3]);
         }
         return this.lonCache;
     }
+
     get ew(): Ew {
         if (undefined === this.ewCache) {
             this.ewCache = mapToEnum(Ew, this.fields[4]);
         }
         return this.ewCache;
     }
+
     get quality(): number {
         if (undefined === this.qualityCache) {
             this.qualityCache = Number.parseInt(this.fields[5], 10);
         }
         return this.qualityCache;
     }
+
     get numSv(): number {
         if (undefined === this.numSvCache) {
             this.numSvCache = Number.parseInt(this.fields[6], 10);
         }
         return this.numSvCache;
     }
+
     get hdop(): number {
         if (undefined === this.hdopCache) {
             this.hdopCache = Number.parseFloat(this.fields[7]);
         }
         return this.hdopCache;
     }
+
     get alt(): number {
         if (undefined === this.altCache) {
             this.altCache = Number.parseFloat(this.fields[8]);
         }
         return this.altCache;
     }
+
     get altUnit(): string {
         return this.fields[9];
     }
+
     get sep(): number {
         if (undefined === this.sepCache) {
             this.sepCache = Number.parseFloat(this.fields[10]);
         }
         return this.sepCache;
     }
+
     get sepUnit(): string {
         return this.fields[11];
     }
+
     get diffAge(): number {
         if (undefined === this.diffAgeCache) {
             this.diffAgeCache = Number.parseFloat(this.fields[12]);
         }
         return this.diffAgeCache;
     }
+
     get diffStation(): number {
         if (undefined === this.diffStationCache) {
             this.diffStationCache = Number.parseFloat(this.fields[13]);

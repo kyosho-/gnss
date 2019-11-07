@@ -1,5 +1,4 @@
 import { Message } from './message';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Time } from './time';
 import { NmeaGps } from '../nmea-gps';
@@ -38,12 +37,14 @@ export class MessageGrs extends Message {
         }
         return this.timeCache;
     }
+
     get mode(): number {
         if (undefined === this.modeCache) {
             this.modeCache = Number.parseInt(this.fields[1], 10);
         }
         return this.modeCache;
     }
+
     get residual(): number[] {
         if (undefined === this.residualCache) {
             this.residualCache = [];
@@ -54,12 +55,14 @@ export class MessageGrs extends Message {
         }
         return this.residualCache;
     }
+
     get systemId(): number {
         if (undefined === this.systemIdCache) {
             this.systemIdCache = Number.parseInt(this.fields[14], 10);
         }
         return this.systemIdCache;
     }
+
     get signalId(): number {
         if (undefined === this.signalIdCache) {
             this.signalIdCache = Number.parseInt(this.fields[15], 10);

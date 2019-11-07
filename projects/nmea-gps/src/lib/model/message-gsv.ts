@@ -1,5 +1,4 @@
 import { Message } from './message';
-import { TalkerId } from './talker-id.enum';
 import { MessageId } from './message-id.enum';
 import { Satellite } from './satellite';
 import { NmeaGps } from '../nmea-gps';
@@ -49,18 +48,21 @@ export class MessageGsv extends Message {
         }
         return this.numMsgCache;
     }
+
     get msgNum(): number {
         if (undefined === this.msgNumCache) {
             this.msgNumCache = Number.parseInt(this.fields[1], 10);
         }
         return this.msgNumCache;
     }
+
     get numSv(): number {
         if (undefined === this.numSvCache) {
             this.numSvCache = Number.parseInt(this.fields[2], 10);
         }
         return this.numSvCache;
     }
+
     get sv(): Satellite[] {
         if (undefined === this.svCache) {
             this.svCache = [];
@@ -74,6 +76,7 @@ export class MessageGsv extends Message {
         }
         return this.svCache;
     }
+
     get signalId(): number {
         if (undefined === this.signalIdCache && this.hasSignalId) {
             this.signalIdCache = Number.parseInt(this.fields[this.fields.length - 1], 10);

@@ -1,5 +1,3 @@
-import { match } from 'minimatch';
-
 export class Time {
     static readonly TIME_REGEX: RegExp =
         /^([0-9]{2})([0-9]{2})([0-9]{2})\.([0-9]{2})$/;
