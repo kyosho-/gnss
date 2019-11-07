@@ -11,6 +11,7 @@
     "loc:nmea": "npx sloc projects/nmea/src/lib -f cli-table -e .*(\\.spec\\.ts)",
     "loc:gps": "npx sloc projects/nmea-gps/src/lib -f cli-table -e .*(\\.spec\\.ts)",
     "uml:msg": "npx puml generate projects/nmea-gps/docs/class-message.pu -o projects/nmea-gps/docs/images/class-message.png",
+    "doc": "npm run doc:nmea && npm run doc:gps",
     "doc:nmea": "npx typedoc --tsconfig projects/nmea/tsconfig.lib.json projects/nmea",
     "doc:gps": "npx typedoc --tsconfig projects/nmea-gps/tsconfig.lib.json projects/nmea-gps"
   },
