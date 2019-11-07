@@ -69,55 +69,30 @@ describe('MessageGsv', () => {
     expect((sn.signalId)).toBeUndefined();
   });
 
-  it('should error on parse method.', () => {
-    const input = '$GPGSV,3,1,09,09,,,17,10,,,40,12,,,49,13,,,35,1*6F\r\n';
-    const nmea = new NmeaGps(input);
-
+  it('should error on field is undefined.', () => {
     try {
-      // const message = new MessageGsv(
-      //   summary.talkerId,
-      //   summary.messageId,
-      //   undefined);
-      const message = new MessageGsv(nmea);
+      const input = '$GPGSV,3,1,09,09,,,17,10,,,40,12,,,49,13,,,35,1*6F\r\n';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(undefined);
+      // tslint:disable-next-line: no-unused-expression
+      new MessageGsv(nmea);
       fail();
     } catch (error) {
       expect(error.message).toEqual('fields is undefined.');
     }
+  });
 
+  it('should error on field is undefined.', () => {
     try {
-      // const message = new MessageGsv(
-      //   summary.talkerId,
-      //   summary.messageId,
-      //   ['']);
-      const message = new MessageGsv(nmea);
+      const input = '$GPGSV,3,1,09,09,,,17,10,,,40,12,,,49,13,,,35,1*6F\r\n';
+      const nmea = new NmeaGps(input);
+      const fields = ['1', '2', '3', '4', '5'];
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(fields);
+      // tslint:disable-next-line: no-unused-expression
+      new MessageGsv(nmea);
       fail();
     } catch (error) {
-      // TODO: check message.
-      expect(error).not.toBeUndefined();
-    }
-
-    try {
-      // const message = new MessageGsv(
-      //   summary.talkerId,
-      //   summary.messageId,
-      //   ['', '', '']);
-      const message = new MessageGsv(nmea);
-      // fail();
-    } catch (error) {
-      // TODO: check message.
-      expect(error).not.toBeUndefined();
-    }
-
-    try {
-      // const message = new MessageGsv(
-      //   summary.talkerId,
-      //   summary.messageId,
-      //   ['', '', '', '']);
-      const message = new MessageGsv(nmea);
-      // fail();
-    } catch (error) {
-      // TODO: check message.
-      expect(error).not.toBeUndefined();
+      expect(error.message).toEqual('Parse Error. (talkerId=GP, messageId=GSV, fields=3,1,09,09,,,17,10,,,40,12,,,49,13,,,35,1)');
     }
   });
 });

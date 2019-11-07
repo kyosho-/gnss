@@ -1,4 +1,6 @@
 import { NmeaGpsFactory } from './nmea-gps-factory';
+import { NmeaGps } from './nmea-gps';
+import { MessageId } from './model';
 
 describe('NmeaGpsFactory', () => {
   it('should error on constructor.', () => {
@@ -183,5 +185,32 @@ describe('NmeaGpsFactory', () => {
     const nmea = NmeaGpsFactory.create(input);
     expect(nmea).toBeTruthy();
     // expect(nmea instanceof MessageZda).toBeTruthy();
+  });
+
+  it('should be error on undefined.', () => {
+    try {
+      const input = undefined;
+      NmeaGpsFactory.create(input);
+    } catch (error) {
+      expect(error.message).toEqual('line is undefined. (line=undefined)');
+    }
+  });
+
+  it('should create ZDA from string', () => {
+    const input = '$GPZDA,082710.00,16,09,2002,00,00*64\r\n';
+    const nmea = new NmeaGps(input);
+    const actual = NmeaGpsFactory.create(nmea);
+    expect(actual.messageId).toEqual(MessageId.ZDA);
+  });
+
+  it('should be error on unsupported MessageId', () => {
+    try {
+      const input = '$GPZDA,082710.00,16,09,2002,00,00*64\r\n';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'messageId', 'get').and.returnValue('XXX');
+      NmeaGpsFactory.create(nmea);
+    } catch (error) {
+      expect(error.message).toEqual(`Unsupported message ID. (id=XXX)`);
+    }
   });
 });

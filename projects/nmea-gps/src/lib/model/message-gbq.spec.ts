@@ -11,7 +11,7 @@ describe('MessageGbq', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GNGBQ,RMC*2D\r\n';
+    const input = '$GPDTM,W84,,0.0,N,0.0,E,0.0,W84*6F\r\n';
     const nmea = new NmeaGps(input);
 
     try {

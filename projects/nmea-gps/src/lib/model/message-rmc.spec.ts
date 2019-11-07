@@ -73,11 +73,11 @@ describe('MessageRmc', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GPRMC,083559.00,A,4717.11437,N,00833.91522,E,0.004,77.52,091202,,,A,V*2D\r\n';
-    const nmea = new NmeaGps(input);
-
     try {
-      // const message = new MessageRmc(summary.talkerId, summary.messageId, ['', '']);
+      const input = '$GPRMC,083559.00,A,4717.11437,N,00833.91522,E,0.004,77.52,091202,,,A,V*2D\r\n';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(undefined);
+      // tslint:disable-next-line: no-unused-expression
       const message = new MessageRmc(nmea);
       fail();
     } catch (error) {

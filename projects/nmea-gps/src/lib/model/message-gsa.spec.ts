@@ -34,12 +34,12 @@ describe('MessageGsa', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GPGSA,A,3,23,29,07,08,09,18,26,28,,,,,1.94,1.18,1.54,1*10\r\n';
-    const nmea = new NmeaGps(input);
-
     try {
-      // const message = new MessageGsa(summary.talkerId, summary.messageId, ['', '']);
-      const message = new MessageGsa(nmea);
+      const input = '$GPGSA,A,3,23,29,07,08,09,18,26,28,,,,,1.94,1.18,1.54,1*10\r\n';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(undefined);
+      // tslint:disable-next-line: no-unused-expression
+      new MessageGsa(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

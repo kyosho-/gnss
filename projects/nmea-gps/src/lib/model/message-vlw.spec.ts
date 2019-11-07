@@ -26,12 +26,12 @@ describe('MessageVlw', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GPVLW,,N,,N,15.8,N,1.2,N*65\r\n';
-    const nmea = new NmeaGps(input);
-
     try {
-      // const message = new MessageVlw(summary.talkerId, summary.messageId, ['', '']);
-      const message = new MessageVlw(nmea);
+      const input = '$GPVLW,,N,,N,15.8,N,1.2,N*65\r\n';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(undefined);
+      // tslint:disable-next-line: no-unused-expression
+      new MessageVlw(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

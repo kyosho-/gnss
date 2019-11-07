@@ -28,8 +28,16 @@ export class NmeaGpsFactory {
         throw new Error(`Constructor is not supported.`);
     }
 
-    static create(line: string): Message {
-        const nmea: NmeaGps = new NmeaGps(line);
+    static create(line: string | NmeaGps): Message {
+        if (undefined === line) {
+            throw Error(`line is undefined. (line=${line})`);
+        }
+
+        if (typeof line === 'string') {
+            line = new NmeaGps(line);
+        }
+
+        const nmea: NmeaGps = line;
         let message: Message;
 
         switch (nmea.messageId) {

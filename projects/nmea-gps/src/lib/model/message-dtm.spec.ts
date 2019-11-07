@@ -34,32 +34,12 @@ describe('MessageDtm', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GPDTM,W84,,0.0,N,0.0,E,0.0,W84*6F\r\n';
-    const nmea = new NmeaGps(input);
-
     try {
-      // const snmea = new MessageDtm(
-      //   summary.talkerId,
-      //   summary.messageId,
-      //   undefined);
-      const snmea = new MessageDtm(nmea);
-      fail();
-    } catch (error) {
-      // TODO: check message.
-      expect(error).not.toBeUndefined();
-    }
-  });
-
-  it('should error on Not Standard.', () => {
-    const input = '$PUBX,41,1,0007,0003,19200,0*25\r\n';
-    const nmea = new NmeaGps(input);
-
-    try {
-      // const snmea = new MessageDtm(
-      //   summary.talkerId,
-      //   summary.messageId,
-      //   splitted);
-      const snmea = new MessageDtm(nmea);
+      const input = '$GPDTM,W84,,0.0,N,0.0,E,0.0,W84*6F\r\n';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(undefined);
+      // tslint:disable-next-line: no-unused-expression
+      new MessageDtm(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

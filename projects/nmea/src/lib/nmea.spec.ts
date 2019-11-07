@@ -20,6 +20,8 @@ describe('Nmea', () => {
     for (const message of messages) {
       try {
         const nmea: Nmea = new Nmea(message);
+        // tslint:disable-next-line: no-unused-expression
+        nmea.address;
         fail('到達しない');
       } catch (e) {
         expect(e.message).toEqual(`Checksum is not match. (line=${message})`);
@@ -90,8 +92,8 @@ describe('Nmea', () => {
       const nmea: Nmea = new Nmea(message);
       // expect(nmea.getTalkerId()).toEqual('GN');
       // expect(nmea.getMessageId()).toEqual('TXT');
-      expect(nmea.getAddress()).toEqual('GNTXT');
-      expect(nmea.getValue()).toEqual('01,01,02,u-blox AG - www.u-blox.com');
+      expect(nmea.address).toEqual('GNTXT');
+      expect(nmea.value).toEqual('01,01,02,u-blox AG - www.u-blox.com');
     }
   });
 
@@ -112,8 +114,30 @@ describe('Nmea', () => {
       const nmea: Nmea = new Nmea(message);
       // expect(nmea.getTalkerId()).toEqual('GN');
       // expect(nmea.getMessageId()).toEqual('TXT');
-      expect(nmea.getAddress()).toEqual('GNTXT');
-      expect(nmea.getValue()).toEqual('01,01,02,u-blox AG - www.u-blox.com');
+      expect(nmea.address).toEqual('GNTXT');
+      expect(nmea.value).toEqual('01,01,02,u-blox AG - www.u-blox.com');
+    }
+  });
+
+  it('can get values3.', () => {
+    const messages = [];
+    // messages.push('!AIVDM,1,1,,B,177KQJ5000G?tO`K>RA1wUbN0TKH,0*5C');
+    // messages.push('!AIVDM,2,1,3,B,55P5TL01VIaAL@7WKO@mBplU@<PDhh000000001S;AJ::4A80?4i@E53,0*3E');
+    // messages.push('!AIVDM,2,2,3,B,1@0000000000000,2*55');
+    // messages.push('!AIVDM,2,2,3,B,1@0000000000000,2*55\n');
+    // messages.push('!AIVDM,2,2,3,B,1@0000000000000,2*55\r\n');
+    // messages.push('!AIVDM,2,2,3,B,1@0000000000000,2*55\r');
+    // messages.push('$GNTXT,01,01,02,u-blox AG - www.u-blox.com*4E');
+    // messages.push('$GNTXT,01,01,02,u-blox AG - www.u-blox.com*4E\n');
+    // messages.push('$GNTXT,01,01,02,u-blox AG - www.u-blox.com*4E\r');
+    messages.push('$GNTXT,01,01,02,u-blox AG - www.u-blox.com*4E\r\n');
+
+    for (const message of messages) {
+      const nmea: Nmea = new Nmea(message);
+      // expect(nmea.getTalkerId()).toEqual('GN');
+      // expect(nmea.getMessageId()).toEqual('TXT');
+      expect(nmea.value).toEqual('01,01,02,u-blox AG - www.u-blox.com');
+      expect(nmea.address).toEqual('GNTXT');
     }
   });
 });

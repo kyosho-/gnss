@@ -18,5 +18,5 @@ export class Message {
 
     get messageId(): MessageId { return this.nmea.messageId; }
 
-    get value(): string { return this.nmea.getValue(); }
+    get value(): string { return this.nmea.value; }
 }

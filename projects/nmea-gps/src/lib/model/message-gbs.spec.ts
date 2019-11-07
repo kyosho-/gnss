@@ -39,12 +39,12 @@ describe('MessageGbs', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GPGBS,235503.00,1.6,1.4,3.2,,,,,,*40\r\n';
-    const nmea = new NmeaGps(input);
-
     try {
-      // const message = new MessageGbs(summary.talkerId, summary.messageId, ['', '']);
-      const message = new MessageGbs(nmea);
+      const input = '$GPGBS,235503.00,1.6,1.4,3.2,,,,,,*40\r\n';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(undefined);
+      // tslint:disable-next-line: no-unused-expression
+      new MessageGbs(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

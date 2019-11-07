@@ -10,29 +10,19 @@ export class Nmea {
         /^[!$](([A-Z]+),([^\*]+))\*([0-9a-fA-F]+)(\r\n|\n|\r)?$/;
 
     /**
+     * Input line.
+     */
+    private line: string;
+
+    /**
      * Address
      */
-    protected address: string;
+    private addressInternal: string;
 
     /**
      * Value
      */
-    protected value: string;
-
-    /**
-     * Constructor.
-     */
-    constructor(line: string) {
-        const matched: string[] = line.match(Nmea.NMEA_REGEX);
-        const checksumRange = matched[1];
-        this.address = matched[2];
-        this.value = matched[3];
-
-        const checksum = parseInt(matched[4], 16);
-        if (!Nmea.validate(checksumRange, checksum)) {
-            throw new Error(`Checksum is not match. (line=${line})`);
-        }
-    }
+    private valueInternal: string;
 
     /**
      * Data validator.
@@ -50,16 +40,44 @@ export class Nmea {
     }
 
     /**
+     * Constructor.
+     */
+    constructor(line: string) {
+        this.line = line;
+    }
+
+    /**
+     * initialize
+     */
+    private initializeNmea() {
+        const matched: string[] = this.line.match(Nmea.NMEA_REGEX);
+        const checksumRange = matched[1];
+        this.addressInternal = matched[2];
+        this.valueInternal = matched[3];
+
+        const checksum = parseInt(matched[4], 16);
+        if (!Nmea.validate(checksumRange, checksum)) {
+            throw new Error(`Checksum is not match. (line=${this.line})`);
+        }
+    }
+
+    /**
      * get address.
      */
-    getAddress(): string {
-        return this.address;
+    get address(): string {
+        if (undefined === this.addressInternal) {
+            this.initializeNmea();
+        }
+        return this.addressInternal;
     }
 
     /**
      * get value.
      */
-    getValue(): string {
-        return this.value;
+    get value(): string {
+        if (undefined === this.valueInternal) {
+            this.initializeNmea();
+        }
+        return this.valueInternal;
     }
 }

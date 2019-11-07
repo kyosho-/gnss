@@ -10,7 +10,8 @@ describe('Satellite', () => {
 
     const target = new Message(nmea);
     expect(target).toBeTruthy();
-    expect(target.talkerId).toEqual(TalkerId.GA);
-    expect(target.messageId).toEqual(MessageId.DTM);
+    expect(target.talkerId).toEqual(TalkerId.GP);
+    expect(target.messageId).toEqual(MessageId.ZDA);
+    expect(target.value).toEqual('082710.00,16,09,2002,00,00');
   });
 });

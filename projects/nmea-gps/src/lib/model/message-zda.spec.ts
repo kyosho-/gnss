@@ -22,12 +22,12 @@ describe('MessageZda', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GPZDA,082710.00,16,09,2002,00,00*64\r\n';
-    const nmea = new NmeaGps(input);
-
     try {
-      // const message = new MessageZda(summary.talkerId, summary.messageId, ['', '']);
-      const message = new MessageZda(nmea);
+      const input = '$GPZDA,082710.00,16,09,2002,00,00*64\r\n';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(undefined);
+      // tslint:disable-next-line: no-unused-expression
+      new MessageZda(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

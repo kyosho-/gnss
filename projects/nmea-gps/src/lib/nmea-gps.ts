@@ -41,13 +41,12 @@ export class NmeaGps extends Nmea {
      */
     constructor(line: string) {
         super(line);
-        this.initialize();
     }
 
     /**
      * 
      */
-    private initialize(): void {
+    private initializeGps(): void {
         if (undefined === this.address ||
             this.address.length !== NmeaGps.ADDRESS_LENGTH) {
             throw new Error(`Address is invalid. (address=${this.address})`);
@@ -66,6 +65,9 @@ export class NmeaGps extends Nmea {
      * 
      */
     get talkerId(): TalkerId {
+        if (undefined === this.talkerIdInternal) {
+            this.initializeGps();
+        }
         return this.talkerIdInternal;
     }
 
@@ -73,6 +75,9 @@ export class NmeaGps extends Nmea {
      * 
      */
     get messageId(): MessageId {
+        if (undefined === this.messageIdInternal) {
+            this.initializeGps();
+        }
         return this.messageIdInternal;
     }
 
@@ -80,6 +85,6 @@ export class NmeaGps extends Nmea {
      * 
      */
     get splitted(): string[] {
-        return this.getValue().split(NmeaGps.FIELD_DELIMITER);
+        return this.value.split(NmeaGps.FIELD_DELIMITER);
     }
 }

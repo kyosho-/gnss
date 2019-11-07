@@ -23,12 +23,12 @@ describe('MessageTxt', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GPTXT,01,01,02,u-blox ag - www.u-blox.com*50\r\n';
-    const nmea = new NmeaGps(input);
-
     try {
-      // const message = new MessageTxt(nmea.talkerId, nmea.messageId, ['', '']);
-      const message = new MessageTxt(nmea);
+      // const input = '$GPTXT,01,01,02,u-blox ag - www.u-blox.com*50\r\n';
+      const input = '$GPDTM,W84,,0.0,N,0.0,E,0.0,W84*6F\r\n';
+      const nmea = new NmeaGps(input);
+      // tslint:disable-next-line: no-unused-expression
+      new MessageTxt(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

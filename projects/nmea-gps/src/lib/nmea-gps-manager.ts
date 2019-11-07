@@ -65,12 +65,23 @@ export class NmeaGpsManager {
     get vtg() { return this.messageVtg; }
     get zda() { return this.messageZda; }
 
-    update(line: string): Message {
-        if (undefined === line || null === line) {
+    update(line: string | Message): Message {
+        if (undefined === line) {
             return undefined;
         }
 
-        const message = NmeaGpsFactory.create(line);
+        if (null === line) {
+            return null;
+        }
+
+        let message: Message;
+        if (typeof line === 'string') {
+            message = NmeaGpsFactory.create(line);
+        }
+
+        if (line instanceof Message) {
+            message = line;
+        }
 
         switch (message.messageId) {
             case MessageId.DTM:

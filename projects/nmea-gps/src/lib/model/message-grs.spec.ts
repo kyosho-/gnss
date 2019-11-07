@@ -37,20 +37,11 @@ describe('MessageGrs', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GNGRS,104148.00,1,2.6,2.2,-1.6,-1.1,-1.7,-1.5,5.8,1.7,,,,,1,1*52\r\n';
-    const nmea = new NmeaGps(input);
-
     try {
-      // const message = new MessageGrs(summary.talkerId, summary.messageId, ['', '']);
-      const message = new MessageGrs(nmea);
-      fail();
-    } catch (error) {
-      // TODO: check message.
-      expect(error).not.toBeUndefined();
-    }
-
-    try {
-      // const message = new MessageGrs(summary.talkerId, summary.messageId, ['', '', '']);
+      const input = '$GNGRS,104148.00,1,2.6,2.2,-1.6,-1.1,-1.7,-1.5,5.8,1.7,,,,,1,1*52\r\n';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(undefined);
+      // tslint:disable-next-line: no-unused-expression
       const message = new MessageGrs(nmea);
       fail();
     } catch (error) {

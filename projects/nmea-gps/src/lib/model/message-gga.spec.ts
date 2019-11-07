@@ -40,12 +40,12 @@ describe('MessageGga', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GPGGA,092725.00,4717.11399,N,00833.91590,E,1,08,1.01,499.6,M,48.0,M,,*5B';
-    const nmea = new NmeaGps(input);
-
     try {
-      // const message = new MessageGga(summary.talkerId, summary.messageId, ['', '']);
-      const message = new MessageGga(nmea);
+      const input = '$GPGGA,092725.00,4717.11399,N,00833.91590,E,1,08,1.01,499.6,M,48.0,M,,*5B';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(undefined);
+      // tslint:disable-next-line: no-unused-expression
+      new MessageGga(nmea);
       fail();
     } catch (error) {
       // TODO: check message.

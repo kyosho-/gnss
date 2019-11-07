@@ -45,12 +45,12 @@ describe('MessageGns', () => {
   });
 
   it('should error on parse method.', () => {
-    const input = '$GNGNS,103600.01,5114.51176,N,00012.29380,W,ANNN,07,1.18,111.5,45.6,,,V*00\r\n';
-    const nmea = new NmeaGps(input);
-
     try {
-      // const message = new MessageGns(summary.talkerId, summary.messageId, ['', '']);
-      const message = new MessageGns(nmea);
+      const input = '$GNGNS,103600.01,5114.51176,N,00012.29380,W,ANNN,07,1.18,111.5,45.6,,,V*00\r\n';
+      const nmea = new NmeaGps(input);
+      spyOnProperty(nmea, 'splitted', 'get').and.returnValue(undefined);
+      // tslint:disable-next-line: no-unused-expression
+      new MessageGns(nmea);
       fail();
     } catch (error) {
       // TODO: check message.
