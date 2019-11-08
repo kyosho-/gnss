@@ -1,6 +1,6 @@
-export * from './datum.enum';
 export * from './talker-id.enum';
 export * from './message-id.enum';
+export * from './datum.enum';
 export * from './dm';
 export * from './ns.enum';
 export * from './ew.enum';
