@@ -1,5 +1,5 @@
 import { NmeaGps } from './nmea-gps';
-import { TalkerId, MessageId } from './model';
+import { TalkerId, MessageId } from './primitive-type';
 
 describe('NmeaGps', () => {
   it('should create an instance', () => {

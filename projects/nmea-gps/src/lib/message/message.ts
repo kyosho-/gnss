@@ -1,5 +1,4 @@
-import { TalkerId } from './talker-id.enum';
-import { MessageId } from './message-id.enum';
+import { TalkerId, MessageId } from '../primitive-type';
 import { NmeaGps } from '../nmea-gps';
 
 /**

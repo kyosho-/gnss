@@ -1,10 +1,5 @@
 import { Message } from './message';
-import { MessageId } from './message-id.enum';
-import { Time } from './time';
-import { Dm } from './dm';
-import { Ns } from './ns.enum';
-import { Ew } from './ew.enum';
-import { Ymd } from './ymd';
+import { MessageId, Time, Dm, Ns, Ew, Ymd } from '../primitive-type';
 import { mapToEnum } from '../util/map-to-enum';
 import { NmeaGps } from '../nmea-gps';
 

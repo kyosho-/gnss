@@ -1,8 +1,6 @@
 import { MessageDtm } from './message-dtm';
 import { NmeaGps } from '../nmea-gps';
-import { Datum } from './datum.enum';
-import { Ns } from './ns.enum';
-import { Ew } from './ew.enum';
+import { Datum, Ns, Ew } from '../primitive-type';
 
 describe('MessageDtm', () => {
   it('should create an instance', () => {

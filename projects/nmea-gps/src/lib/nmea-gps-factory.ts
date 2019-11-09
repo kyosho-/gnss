@@ -1,7 +1,7 @@
 import { NmeaGps } from './nmea-gps';
+import { MessageId } from './primitive-type';
 import {
     Message,
-    MessageId,
     MessageDtm,
     MessageGbq,
     MessageGbs,
@@ -20,7 +20,7 @@ import {
     MessageVlw,
     MessageVtg,
     MessageZda
-} from './model';
+} from './message';
 
 export class NmeaGpsFactory {
 

@@ -1,5 +1,5 @@
+import { MessageId } from './primitive-type';
 import {
-    MessageId,
     Message,
     MessageDtm,
     MessageGbq,
@@ -19,7 +19,7 @@ import {
     MessageVlw,
     MessageVtg,
     MessageZda
-} from './model';
+} from './message';
 import { NmeaGpsFactory } from './nmea-gps-factory';
 
 /**

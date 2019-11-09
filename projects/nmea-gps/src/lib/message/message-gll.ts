@@ -1,11 +1,7 @@
-import { Message } from './message';
-import { MessageId } from './message-id.enum';
-import { Ns } from './ns.enum';
-import { Dm } from './dm';
-import { Ew } from './ew.enum';
-import { Time } from './time';
-import { mapToEnum } from '../util/map-to-enum';
 import { NmeaGps } from '../nmea-gps';
+import { Message } from './message';
+import { MessageId, Dm, Ns, Ew, Time } from '../primitive-type';
+import { mapToEnum } from '../util/map-to-enum';
 
 export class MessageGll extends Message {
     /**

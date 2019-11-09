@@ -1,10 +1,7 @@
 import { Message } from './message';
-import { Datum } from './datum.enum';
-import { MessageId } from './message-id.enum';
-import { Ns } from './ns.enum';
-import { Ew } from './ew.enum';
-import { mapToEnum } from '../util/map-to-enum';
 import { NmeaGps } from '../nmea-gps';
+import { Datum, MessageId, Ns, Ew } from '../primitive-type';
+import { mapToEnum } from '../util/map-to-enum';
 
 export class MessageDtm extends Message {
     /**

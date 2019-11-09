@@ -1,6 +1,5 @@
 import { Message } from './message';
-import { MessageId } from './message-id.enum';
-import { Time } from './time';
+import { MessageId, Time } from '../primitive-type';
 import { NmeaGps } from '../nmea-gps';
 
 export class MessageGbs extends Message {

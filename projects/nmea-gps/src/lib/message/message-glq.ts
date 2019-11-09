@@ -1,12 +1,12 @@
 import { Message } from './message';
-import { MessageId } from './message-id.enum';
+import { MessageId } from '../primitive-type/message-id.enum';
 import { NmeaGps } from '../nmea-gps';
 
-export class MessageGbq extends Message {
+export class MessageGlq extends Message {
     /**
      * Message ID.
      */
-    static readonly ID = MessageId.GBQ;
+    static readonly ID = MessageId.GLQ;
 
     /**
      * Field parameter number.
@@ -18,7 +18,7 @@ export class MessageGbq extends Message {
 
         // validation
         if (undefined === this.fields ||
-            this.fields.length !== MessageGbq.FIELD_NUM) {
+            this.fields.length !== MessageGlq.FIELD_NUM) {
             throw new Error(`Parse Error. (message=${this.value})`);
         }
     }

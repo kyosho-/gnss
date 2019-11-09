@@ -1,6 +1,6 @@
 import { NmeaGpsManager } from './nmea-gps-manager';
-import { TalkerId, Message } from './model';
-import { MessageId } from './model';
+import { TalkerId, MessageId } from './primitive-type';
+import { Message } from './message';
 
 describe('NmeaGpsManager', () => {
   it('should create an instance', () => {
