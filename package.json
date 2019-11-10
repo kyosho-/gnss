@@ -1,6 +1,6 @@
 {
   "name": "gnss",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "scripts": {
     "build": "npm run build:nmea && npm run build:gps",
     "build:nmea": "npx ng build --project=nmea",
