@@ -1,6 +1,6 @@
 {
   "name": "@kyosho-/nmea",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "NMEA Parser",
   "repository": {
     "type": "git",
