@@ -1,6 +1,6 @@
 {
   "name": "@kyosho-/nmea-gps",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "NMEA Parser",
   "repository": {
     "type": "git",
@@ -20,8 +20,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "peerDependencies": {
-    "@kyosho-/nmea": "1.0.2"
-  },
-  "dependencies": {}
+  "peerDependencies": {},
+  "dependencies": {
+    "@kyosho-/nmea": "1.0.3"
+  }
 }
