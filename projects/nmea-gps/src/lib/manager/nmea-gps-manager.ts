@@ -21,6 +21,7 @@ import {
     MessageZda
 } from '../message';
 import { NmeaGpsFactory } from '../nmea-gps-factory';
+import { NmeaGsvManager } from './nmea-gsv-manager';
 
 /**
  * @category controller
@@ -39,7 +40,7 @@ export class NmeaGpsManager {
     private messageGrs: MessageGrs;
     private messageGsa: MessageGsa;
     private messageGst: MessageGst;
-    private messageGsv: MessageGsv;
+    private gsvManager: NmeaGsvManager = new NmeaGsvManager();
     private messageRmc: MessageRmc;
     private messageTxt: MessageTxt;
     private messageVlw: MessageVlw;
@@ -58,7 +59,7 @@ export class NmeaGpsManager {
     get grs() { return this.messageGrs; }
     get gsa() { return this.messageGsa; }
     get gst() { return this.messageGst; }
-    get gsv() { return this.messageGsv; }
+    get gsv() { return this.gsvManager.gsv; }
     get rmc() { return this.messageRmc; }
     get txt() { return this.messageTxt; }
     get vlw() { return this.messageVlw; }
@@ -121,7 +122,7 @@ export class NmeaGpsManager {
                 this.messageGst = message as MessageGst;
                 break;
             case MessageId.GSV:
-                this.messageGsv = message as MessageGsv;
+                this.gsvManager.update(message as MessageGsv);
                 break;
             case MessageId.RMC:
                 this.messageRmc = message as MessageRmc;
