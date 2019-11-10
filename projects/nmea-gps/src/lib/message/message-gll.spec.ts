@@ -1,6 +1,6 @@
 import { MessageGll } from './message-gll';
 import { NmeaGps } from '../nmea-gps';
-import { Ns, Ew } from '../primitive-type';
+import { Ns, Ew } from '../type';
 
 describe('MessageGll', () => {
   it('should create an instance', () => {

@@ -1,6 +1,6 @@
 import { Message } from './message';
 import { NmeaGps } from '../nmea-gps';
-import { Datum, MessageId, Ns, Ew } from '../primitive-type';
+import { Datum, MessageId, Ns, Ew } from '../type';
 import { mapToEnum } from '../util/map-to-enum';
 
 export class MessageDtm extends Message {

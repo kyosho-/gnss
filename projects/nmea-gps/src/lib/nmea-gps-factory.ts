@@ -1,5 +1,5 @@
 import { NmeaGps } from './nmea-gps';
-import { MessageId } from './primitive-type';
+import { MessageId } from './type';
 import {
     Message,
     MessageDtm,

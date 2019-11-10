@@ -1,5 +1,5 @@
 import { Message } from './message';
-import { MessageId, Satellite } from '../primitive-type';
+import { MessageId, Satellite } from '../type';
 import { NmeaGps } from '../nmea-gps';
 
 export class MessageGsv extends Message {

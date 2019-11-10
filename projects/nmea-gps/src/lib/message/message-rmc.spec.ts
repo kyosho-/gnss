@@ -1,6 +1,6 @@
 import { MessageRmc } from './message-rmc';
 import { NmeaGps } from '../nmea-gps';
-import { Ns, Ew } from '../primitive-type';
+import { Ns, Ew } from '../type';
 
 describe('MessageRmc', () => {
   it('should create an instance', () => {

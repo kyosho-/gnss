@@ -1,4 +1,4 @@
-import { MessageId } from './primitive-type';
+import { MessageId } from '../type';
 import {
     Message,
     MessageDtm,
@@ -19,8 +19,8 @@ import {
     MessageVlw,
     MessageVtg,
     MessageZda
-} from './message';
-import { NmeaGpsFactory } from './nmea-gps-factory';
+} from '../message';
+import { NmeaGpsFactory } from '../nmea-gps-factory';
 
 /**
  * @category controller

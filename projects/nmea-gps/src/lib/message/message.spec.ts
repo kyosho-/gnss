@@ -1,5 +1,5 @@
 import { Message } from './message';
-import { TalkerId, MessageId } from '../primitive-type';
+import { TalkerId, MessageId } from '../type';
 import { NmeaGps } from '../nmea-gps';
 
 describe('Satellite', () => {

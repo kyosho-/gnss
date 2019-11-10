@@ -1,5 +1,5 @@
 import { Message } from './message';
-import { MessageId, Time, Dm, Ns, Ew, Ymd } from '../primitive-type';
+import { MessageId, Time, Dm, Ns, Ew, Ymd } from '../type';
 import { mapToEnum } from '../util/map-to-enum';
 import { NmeaGps } from '../nmea-gps';
 

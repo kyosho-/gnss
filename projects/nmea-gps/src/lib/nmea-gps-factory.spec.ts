@@ -1,6 +1,6 @@
 import { NmeaGpsFactory } from './nmea-gps-factory';
 import { NmeaGps } from './nmea-gps';
-import { MessageId } from './primitive-type';
+import { MessageId } from './type';
 
 describe('NmeaGpsFactory', () => {
   it('should error on constructor.', () => {

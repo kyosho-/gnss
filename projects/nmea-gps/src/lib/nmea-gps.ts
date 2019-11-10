@@ -1,7 +1,7 @@
 import { Nmea } from '@kyosho-/nmea';
 
 import { mapToEnum } from './util/map-to-enum';
-import { TalkerId, MessageId } from './primitive-type';
+import { TalkerId, MessageId } from './type';
 
 /**
  * NMEA Base Sentence
