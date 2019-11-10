@@ -105,7 +105,7 @@ describe('NmeaGpsManager', () => {
     m = manager.update(line);
     // check(m, TalkerId.GP, MessageId.GSV, manager.gsv);
     // check(m, TalkerId.GP, MessageId.GSV, manager.gsv.messages[0]);
-    expect(manager.gsv).toBeTruthy();
+    expect(manager.gsv).toBeUndefined();
     // RMC
     line = '$GPRMC,083559.00,A,4717.11437,N,00833.91522,E,0.004,77.52,091202,,,A,V*2D\r\n';
     m = manager.update(line);
