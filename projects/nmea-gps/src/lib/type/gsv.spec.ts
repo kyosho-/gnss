@@ -1,4 +1,4 @@
-import { MessageGsv } from '../message';
+import { MessageGsv } from '../messages';
 import { NmeaGps } from '../nmea-gps';
 import { Gsv } from './gsv';
 

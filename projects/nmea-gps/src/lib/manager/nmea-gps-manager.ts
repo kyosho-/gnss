@@ -19,7 +19,7 @@ import {
     MessageVlw,
     MessageVtg,
     MessageZda
-} from '../message';
+} from '../messages';
 import { NmeaGpsFactory } from '../nmea-gps-factory';
 import { NmeaGsvManager } from './nmea-gsv-manager';
 

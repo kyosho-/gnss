@@ -20,7 +20,7 @@ import {
     MessageVlw,
     MessageVtg,
     MessageZda
-} from './message';
+} from './messages';
 
 export class NmeaGpsFactory {
 

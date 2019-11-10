@@ -1,4 +1,4 @@
-import { MessageGsv } from '../message';
+import { MessageGsv } from '../messages';
 import { Gsv } from '../type/gsv';
 
 export class NmeaGsvManager {

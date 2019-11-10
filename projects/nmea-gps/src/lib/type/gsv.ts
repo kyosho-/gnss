@@ -1,4 +1,4 @@
-import { MessageGsv } from '../message';
+import { MessageGsv } from '../messages';
 import { Satellite } from './satellite';
 
 export class Gsv {

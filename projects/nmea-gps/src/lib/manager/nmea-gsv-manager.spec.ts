@@ -1,5 +1,5 @@
 import { NmeaGsvManager } from './nmea-gsv-manager';
-import { MessageGsv } from '../message';
+import { MessageGsv } from '../messages';
 import { NmeaGps } from '../nmea-gps';
 
 describe('NmeaGsvManager', () => {
