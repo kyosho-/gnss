@@ -2,9 +2,14 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
+    "target": "es5",
     "types": [
       "jasmine",
       "node"
+    ],
+    "lib": [
+      "dom",
+      "es2017"
     ]
   },
   "files": [
