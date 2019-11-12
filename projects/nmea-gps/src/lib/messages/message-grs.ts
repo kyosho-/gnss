@@ -25,7 +25,9 @@ export class MessageGrs extends Message {
 
         // validation
         if (undefined === this.fields ||
-            this.fields.length !== MessageGrs.FIELD_NUM) {
+            (this.fields.length !== MessageGrs.FIELD_NUM &&
+                this.fields.length !== MessageGrs.FIELD_NUM - 1 &&
+                this.fields.length !== MessageGrs.FIELD_NUM - 2)) {
             throw new Error(`Parse Error. (message=${this.value})`);
         }
     }
@@ -56,14 +58,14 @@ export class MessageGrs extends Message {
     }
 
     get systemId(): number {
-        if (undefined === this.systemIdCache) {
+        if (undefined === this.systemIdCache && this.fields.length >= 15) {
             this.systemIdCache = Number.parseInt(this.fields[14], 10);
         }
         return this.systemIdCache;
     }
 
     get signalId(): number {
-        if (undefined === this.signalIdCache) {
+        if (undefined === this.signalIdCache && this.fields.length >= 16) {
             this.signalIdCache = Number.parseInt(this.fields[15], 10);
         }
         return this.signalIdCache;

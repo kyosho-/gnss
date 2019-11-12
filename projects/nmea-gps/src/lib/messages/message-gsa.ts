@@ -26,7 +26,8 @@ export class MessageGsa extends Message {
 
         // validation
         if (undefined === this.fields ||
-            this.fields.length !== MessageGsa.FIELD_NUM) {
+            (this.fields.length !== MessageGsa.FIELD_NUM &&
+                this.fields.length !== MessageGsa.FIELD_NUM - 1)) {
             throw new Error(`Parse Error. (message=${this.value})`);
         }
     }
@@ -69,7 +70,7 @@ export class MessageGsa extends Message {
         return this.vdopCache;
     }
     get systemId(): number {
-        if (undefined === this.systemIdCache) {
+        if (undefined === this.systemIdCache && this.fields.length >= 18) {
             this.systemIdCache = Number.parseInt(this.fields[17], 10);
         }
         return this.systemIdCache;
