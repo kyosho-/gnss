@@ -43,7 +43,7 @@
     "karma-ie-launcher": "^1.0.0",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
-    "ng-packagr": "^5.4.0",
+    "ng-packagr": "^10.1.1",
     "node-plantuml": "^0.9.0",
     "protractor": "~5.4.0",
     "sloc": "^0.2.1",
